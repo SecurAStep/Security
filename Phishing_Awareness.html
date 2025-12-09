@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Phishing Awareness</title>
+    <style>
+        body {
+            font-family: 'Calibri', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+        }
+
+        section {
+            margin: 20px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        section:hover {
+            transform: scale(1.02);
+        }
+
+        section h2 {
+            font-size: 24px;
+            color: #4CAF50;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .example {
+            font-size: 16px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .section-logo {
+            width: 50px;
+            height: 50px;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+
+        .phishing-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .phishing-section img {
+            max-width: 100%;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        #quiz-container {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .quiz-question {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .quiz-options {
+            margin-top: 15px;
+        }
+
+        .quiz-option {
+            display: block;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .quiz-option:hover {
+            background-color: #ddd;
+        }
+
+        .quiz-result {
+            font-size: 20px;
+            margin-top: 15px;
+            color: #4CAF50;
+        }
+
+        .warning-popup {
+            background-color: #ffcc00;
+            color: #333;
+            text-align: center;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup-close {
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .timeline-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .timeline-item {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    Types of Phishing Attacks & Awareness
+</header>
+
+<nav>
+    <a href="#email-phishing">Email Phishing</a>
+    <a href="#spear-phishing">Spear Phishing</a>
+    <a href="#whaling">Whaling</a>
+    <a href="#vishing">Vishing</a>
+    <a href="#smishing">Smishing</a>
+    <a href="#angler-phishing">Angler</a>
+    <a href="#clone-phishing">Clone</a>
+    <a href="#pharming">Pharming</a>
+    <a href="#mitm-phishing">MITM</a>
+    <a href="#phishingawarenessquiz">Phishing Awareness Quiz
+</a>
+    <a href="#Evolution-of-Phishing-Attacks">Evolution of Phishing Attacks</a>
+</nav>
+<!-- Pop-up Warning -->
+<div id="warning-popup" class="warning-popup" style="display: none;">
+    <span>⚠️ Phishing Alert! Always verify the authenticity of emails.</span>
+    <span class="popup-close" onclick="closePopup()">×</span>
+</div>
+
+<section id="email-phishing">
+    <img src="https://imgs.search.brave.com/-hhw7lIdXxSUWr1UQPwIuWnOnmERtt8aZikFuguc_aU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA4LzkzLzUyLzgx/LzM2MF9GXzg5MzUy/ODEyOF9MTG8zYUFh/bE9nY1pUZ01rdWR5/N2hXbVhaWGQwdGNL/SS5qcGc" class="section-logo" alt="Email Phishing Logo">
+    <h2>Email Phishing</h2>
+    <p>Email phishing is the most common form of phishing, where attackers send fraudulent emails that appear to come from legitimate organizations like banks, social media platforms, or e-commerce websites. These emails often contain links that lead to fake websites designed to steal personal information.</p>
+    <p class="example"><strong>Example:</strong> A fake email from a bank asking you to verify your account by clicking on a link that leads to a counterfeit banking site.</p>
+</section>
+
+<section id="spear-phishing">
+    
+    <h2>Spear Phishing</h2>
+    <p>Spear phishing is a more targeted form of phishing where attackers personalize the message to a specific individual or organization. They gather information about the victim, such as their job, interests, or social media activities, to make the attack more convincing.</p>
+    <p class="example"><strong>Example:</strong> A fraudster posing as your boss and sending an email requesting a wire transfer, knowing you handle financial transactions at your job.</p>
+</section>
+
+<section id="whaling">
+    <h2>Whaling</h2>
+    <p>Whaling is a form of spear phishing that specifically targets high-profile individuals like executives, senior managers, or key decision-makers within an organization. The goal is often to steal large amounts of money or sensitive business information.</p>
+    <p class="example"><strong>Example:</strong> A phishing email that looks like a legitimate legal or financial notice sent to a CEO, asking them to sign an urgent document or make a transfer.</p>
+</section>
+
+<section id="vishing">
+    <h2>Vishing (Voice Phishing)</h2>
+    <p>Vishing is phishing carried out over the phone. Attackers call their victims and pretend to be from a trusted organization (like a bank or government agency), attempting to extract personal information such as Social Security numbers or bank account details.</p>
+    <p class="example"><strong>Example:</strong> A phone call claiming to be from a bank asking you to provide your account number and PIN for "security verification."</p>
+</section>
+
+<section id="smishing">
+    <h2>Smishing (SMS Phishing)</h2>
+    <p>In smishing, phishing is carried out through SMS text messages. Attackers send fake text messages, often appearing to come from a legitimate source, with links that lead to malicious websites or prompts to provide personal information.</p>
+    <p class="example"><strong>Example:</strong> A message that looks like it’s from your phone service provider, telling you your account has been suspended and asking you to click on a link to restore service.</p>
+</section>
+
+<section id="angler-phishing">
+    <h2>Angler Phishing</h2>
+    <p>Angler phishing occurs on social media platforms, where attackers impersonate customer service accounts or companies to trick users into disclosing personal information. These attacks often use fake profiles or posts to lure individuals.</p>
+    <p class="example"><strong>Example:</strong> A fake Twitter account that impersonates a popular airline's customer support, asking you to send personal details to "resolve an issue" with your flight.</p>
+</section>
+
+<section id="clone-phishing">
+    <h2>Clone Phishing</h2>
+    <p>In clone phishing, attackers create a near-identical replica of a legitimate message that the victim has received previously. The attacker modifies the original message with a malicious link or attachment.</p>
+    <p class="example"><strong>Example:</strong> You receive a clone of a previously received email, but the link or attachment in the email is altered to lead you to a malicious site.</p>
+</section>
+
+<section id="pharming">
+    <h2>Pharming</h2>
+    <p>Unlike traditional phishing, pharming does not rely on social engineering. Instead, it manipulates the victim's DNS (Domain Name System) settings, redirecting them from legitimate websites to malicious ones. This can be done by compromising a website or manipulating a victim’s local settings.</p>
+    <p class="example"><strong>Example:</strong> You type in the correct URL for your bank’s website, but you are redirected to a fake website designed to steal your login credentials.</p>
+</section>
+
+<section id="mitm-phishing">
+    <h2>Man-in-the-Middle (MITM) Phishing</h2>
+    <p>In a MITM phishing attack, the attacker intercepts communication between the victim and a legitimate site, such as an online banking session. The attacker can alter the messages or steal information like login credentials.</p>
+    <p class="example"><strong>Example:</strong> An attacker intercepts your login credentials while you're accessing a legitimate website through an unsecured public Wi-Fi network.</p>
+</section>
+
+<section id="phishingawarenessquiz">
+    <div id="quiz-container">
+        <h2>Phishing Awareness Quiz</h2>
+        <p class="quiz-question">What should you do if you receive an email asking you to click on a link to verify your bank account?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" onclick="checkAnswer('wrong')">Click the link to verify.</div>
+            <div class="quiz-option" onclick="checkAnswer('correct')">Contact the bank through their official website or phone number.</div>
+            <div class="quiz-option" onclick="checkAnswer('wrong')">Ignore the email and delete it.</div>
+        </div>
+        <div id="quiz-result" class="quiz-result"></div>
+    </div>
+</section>
+
+<section id="Evolution-of-Phishing-Attacks">
+    <h2>Evolution of Phishing Attacks</h2>
+    <p>Explore how phishing tactics have evolved over the years. Click on a year to learn about phishing attacks from that time period.</p>
+    <div class="timeline-container">
+        <div class="timeline-item" onclick="showPhishingHistory('2000s')">2000s</div>
+        <div class="timeline-item" onclick="showPhishingHistory('2010s')">2010s</div>
+        <div class="timeline-item" onclick="showPhishingHistory('2020s')">2020s</div>
+    </div>
+    <div id="timeline-detail" style="margin-top: 20px; font-size: 18px;"></div>
+</section>
+
+
+
+<footer>
+    © 2024 Phishing Awareness. All Rights Reserved.
+</footer>
+
+<script>
+    function checkAnswer(answer) {
+        const result = document.getElementById('quiz-result');
+        if (answer === 'correct') {
+            result.textContent = 'Correct! Always verify directly through official channels.';
+            result.style.color = '#4CAF50';
+        } else {
+            result.textContent = 'Incorrect. Phishing emails can look very convincing!';
+            result.style.color = 'red';
+        }
+    }
+
+    function showPhishingHistory(decade) {
+        const timelineDetail = document.getElementById('timeline-detail');
+        if (decade === '2000s') {
+            timelineDetail.textContent = 'In the 2000s, phishing attacks were mostly email-based, targeting users through fake banking and lottery messages.';
+        } else if (decade === '2010s') {
+            timelineDetail.textContent = 'In the 2010s, social media phishing emerged, with attackers using fake profiles to steal personal data.';
+        } else if (decade === '2020s') {
+            timelineDetail.textContent = 'In the 2020s, spear-phishing and ransomware attacks became more common, often targeting businesses and high-profile individuals.';
+        }
+    }
+
+    function closePopup() {
+        document.getElementById('warning-popup').style.display = 'none';
+    }
+
+    document.querySelectorAll('section').forEach(function (section) {
+        section.addEventListener('mouseenter', function () {
+            document.getElementById('warning-popup').style.display = 'block';
+        });
+    });
+</script>
+
+</body>
+</html>

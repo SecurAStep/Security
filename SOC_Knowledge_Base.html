@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Awareness & SOC Education</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Calibri, sans-serif;
+            background-color: #1c1c1c;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 18px;
+            color: #ffc300
+        }
+
+        /* World Map Styles */
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: url('https://eoimages.gsfc.nasa.gov/images/imagerecords/147000/147990/jsc2012e052683_720-2.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .map-overlay h2 {
+            color: #fff;
+            font-size: 28px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Interactive Section */
+        .interactive-section {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 50px;
+            gap: 40px;
+        }
+
+        .interactive-item {
+            background-color: #34495e;
+            border-radius: 10px;
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .interactive-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .interactive-item i {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+
+        .interactive-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .interactive-item p {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .details-section {
+            display: none;
+            background-color: #2c3e50;
+            color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+
+        .details-section.active {
+            display: block;
+        }
+
+        .details-section h4 {
+            font-size: 24px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 16px;
+        }
+     /* Golden Ratio Values */
+        :root {
+            --base-size: 40px; /* Starting size */
+            --golden-ratio: 1.618;
+            --button-size: calc(var(--base-size) * var(--golden-ratio)); /* Button diameter */
+            --font-size: calc(var(--base-size) * 0.5); /* Icon size based on the base size */
+            --hover-color: #FFD700; /* Golden color */
+            --active-color: #FFB300; /* Darker golden color */
+        }
+
+        /* Button Styling */
+        .home-button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: var(--font-size); /* Icon size adjusted by golden ratio */
+            width: var(--button-size);  /* Button width adjusted by golden ratio */
+            height: var(--button-size);  /* Button height adjusted by golden ratio */
+            background-color: var(--hover-color); /* Golden background */
+            color: white;
+            border: none;
+            border-radius: 50%; /* Circular button */
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* Hover Effects */
+        .home-button:hover {
+            background-color: var(--active-color); /* Darker golden hover color */
+            transform: scale(1.1); /* Button grows slightly */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+
+        /* Click Effect */
+        .home-button:active {
+            transform: scale(0.98); /* Button shrinks slightly when clicked */
+        }
+    </style>
+</head>
+<body>
+    <!-- Home Button with Logo (No Text) -->
+    <button class="home-button" onclick="goHome()">
+        <i class="fas fa-home"></i>
+    </button>
+    <!-- Header -->
+    <header>
+        <h1>Cybersecurity & SOC Awareness</h1>
+        <p>Learn the basics of cybersecurity, Security Operations Centers, and how to stay safe online.</p>
+    </header>
+
+    <!-- Interactive Content Section -->
+    
+    <div class="interactive-section">
+        <div class="interactive-item" onclick="toggleDetails('osi-layers')">
+            <i class="fas fa-network-wired"></i>
+            <h3>OSI Layers</h3>
+            <p>Understand how data flows through various layers in a network.</p>
+        </div>
+        <div id="osi-layers" class="details-section">
+            <h4>OSI Layers</h4>
+            <p>The OSI (Open Systems Interconnection) model is a conceptual framework that helps understand how different layers in a network communicate. It consists of seven layers: Physical, Data Link, Network, Transport, Session, Presentation, and Application. Each layer has its own function, and together, they allow data to be transferred across networks.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('networking')">
+            <i class="fas fa-cogs"></i>
+            <h3>Networking</h3>
+            <p>Learn about networking protocols and how devices communicate.</p>
+        </div>
+        <div id="networking" class="details-section">
+            <h4>Networking</h4>
+            <p>Networking involves connecting computers and devices so they can share information. It uses protocols like TCP/IP to ensure data is sent correctly over the internet. Networking includes understanding how devices communicate with each other, how IP addresses are assigned, and how data travels through cables and wireless networks.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('servers-endpoints')">
+            <i class="fas fa-server"></i>
+            <h3>Servers & Endpoints</h3>
+            <p>Explore the role of servers and devices in cybersecurity.</p>
+        </div>
+        <div id="servers-endpoints" class="details-section">
+            <h4>Servers & Endpoints</h4>
+            <p>Servers are powerful computers that store data and make it available to other devices (endpoints) like laptops or phones. Securing servers and endpoints is vital to prevent hackers from accessing sensitive information.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('dns-urls')">
+            <i class="fas fa-globe"></i>
+            <h3>URLs & DNS</h3>
+            <p>Learn how websites are accessed and resolved via DNS.</p>
+        </div>
+        <div id="dns-urls" class="details-section">
+            <h4>DNS & URLs</h4>
+            <p>DNS (Domain Name System) is like the internet's phonebook. It translates human-readable website addresses (URLs) like 'example.com' into machine-readable IP addresses that computers use to locate the site on the internet.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('dhcp-ip')">
+            <i class="fas fa-cloud"></i>
+            <h3>DHCP & IP Addresses</h3>
+            <p>Understand how IP addresses are assigned and used in a network.</p>
+        </div>
+        <div id="dhcp-ip" class="details-section">
+            <h4>DHCP & IP Addresses</h4>
+            <p>DHCP (Dynamic Host Configuration Protocol) assigns unique IP addresses to devices on a network. An IP address is like an identification number for a device, allowing it to communicate over the internet.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('cybersecurity-fundamentals')">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Cybersecurity Fundamentals</h3>
+            <p>Discover essential cybersecurity concepts like the CIA Triad and OWASP Top 10.</p>
+        </div>
+        <div id="cybersecurity-fundamentals" class="details-section">
+            <h4>Cybersecurity Fundamentals</h4>
+            <p>Cybersecurity fundamentals include the CIA Triad (Confidentiality, Integrity, Availability), which ensures that information is kept safe, accurate, and accessible. OWASP Top 10 lists the most critical web application security risks, like SQL injection and cross-site scripting.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('incident-response')">
+            <i class="fas fa-search"></i>
+            <h3>Incident Response</h3>
+            <p>Learn how cybersecurity teams respond to attacks.</p>
+        </div>
+        <div id="incident-response" class="details-section">
+            <h4>Incident Response</h4>
+            <p>Incident Response is the process of identifying, managing, and mitigating cybersecurity incidents like data breaches or system hacks. A good incident response plan helps reduce the impact of attacks and restores operations quickly.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('cyberattacks')">
+            <i class="fas fa-virus"></i>
+            <h3>Common Cyberattacks</h3>
+            <p>Explore different types of cyberattacks like phishing and malware.</p>
+        </div>
+        <div id="cyberattacks" class="details-section">
+            <h4>Common Cyberattacks</h4>
+            <p>Cyberattacks come in many forms: DDoS (Distributed Denial of Service) attacks overwhelm websites, phishing attempts trick people into sharing personal information, and malware is harmful software that infects systems.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('email-security')">
+            <i class="fas fa-key"></i>
+            <h3>Email Security Investigation</h3>
+            <p>Learn how to protect your inbox from malicious emails.</p>
+        </div>
+        <div id="email-security" class="details-section">
+            <h4>Email Security Investigation</h4>
+            <p>Email security involves checking for signs of phishing or malware in emails. Protecting email accounts includes using strong passwords, encryption, and recognizing suspicious messages.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('network-investigation')">
+            <i class="fas fa-network-wired"></i>
+            <h3>Network Traffic Investigation</h3>
+            <p>Explore how network traffic is monitored for signs of cyber threats.</p>
+        </div>
+        <div id="network-investigation" class="details-section">
+            <h4>Network Traffic Investigation</h4>
+            <p>Network traffic investigation helps identify unusual or malicious activities on a network, such as unauthorized data transfers or attacks. Monitoring tools like firewalls and Intrusion Detection Systems (IDS) are used to detect such threats.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('malware-investigation')">
+            <i class="fas fa-virus"></i>
+            <h3>Malware Investigation</h3>
+            <p>Understand how malware is detected and mitigated in an organization.</p>
+        </div>
+        <div id="malware-investigation" class="details-section">
+            <h4>Malware Investigation</h4>
+            <p>Malware investigation involves analyzing harmful software to understand how it infects systems. Once detected, security teams remove malware and prevent future infections using antivirus programs and other tools.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('detection-prevention')">
+            <i class="fas fa-lock"></i>
+            <h3>Data Loss Prevention (DLP)</h3>
+            <p>Learn how data loss is prevented during transit.</p>
+        </div>
+        <div id="detection-prevention" class="details-section">
+            <h4>Data Loss Prevention (DLP)</h4>
+            <p>DLP refers to techniques used to prevent sensitive data from being accidentally or intentionally leaked out of an organization. It includes monitoring data transfers and blocking unauthorized access to critical information.</p>
+        </div>
+
+        <div class="interactive-item" onclick="toggleDetails('educational-resources')">
+            <i class="fas fa-book"></i>
+            <h4>Educational Resources for Cybersecurity</h4>
+            <p>Resources designed for teaching cybersecurity, with a focus on Capture the Flag (CTF) games used for learning.</p>
+        </div>
+        <div id="educational-resources" class="details-section">
+            <h4>Educational Resources for Cybersecurity</h4>
+            <p>Online Training Grounds and Practice Challenges:</p>
+            <ul>
+                <li>Avatao – Platform offering cybersecurity challenges to hone various skills.</li>
+                <li>Crackmes.One – A site for reverse engineering challenges.</li>
+                <li>Damn Vulnerable Web Application (DVWA) – A vulnerable web application (PHP/MySQL) designed for learning and testing security.</li>
+                <li>Exploit Exercises – Provides virtual machines and challenges for practicing security exploits.</li>
+                <li>Hack Me – A community-driven platform to create, share, and host vulnerable web applications.</li>
+                <li>Hack The Box – A popular platform with challenges in penetration testing and cybersecurity.</li>
+                <li>Hack This Site – An interactive training ground for aspiring hackers, complete with community discussions.</li>
+                <li>Hack This!! – Offers challenges covering a range of topics like cryptography, forensics, and web vulnerabilities.</li>
+                <li>Hacker Test – A platform for practicing web development security challenges, including JavaScript, PHP, and HTML.</li>
+                <li>Root Me – A hub of challenges for testing hacking skills.</li>
+                <li>Secure Code Warrior – Offers learning materials and practical challenges focused on secure coding practices.</li>
+                <li>Wargames – A series of games to practice hacking and security skills.</li>
+            </ul>
+            <p>Capture the Flag (CTF) Competitions:</p>
+            <ul>
+                <li>CTFd – An open-source platform for hosting CTF competitions.</li>
+                <li>CTFtime – A website that tracks upcoming and past CTF events.</li>
+                <li>CTF Field Guide – A comprehensive guidebook to help prepare for CTF challenges.</li>
+            </ul>
+            <p>Online Courses and Learning Materials:</p>
+            <ul>
+                <li>Cybrary – A platform with free online cybersecurity courses.</li>
+                <li>Cybersecurity Guide – A comprehensive collection of cybersecurity guides and resources.</li>
+                <li>Practical Ethical Hacking – Online courses in ethical hacking and penetration testing techniques.</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Cybersecurity Awareness. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleDetails(id) {
+            var element = document.getElementById(id);
+            if (element.classList.contains("active")) {
+                element.classList.remove("active");
+            } else {
+                element.classList.add("active");
+            }
+        }
+         // JavaScript function to redirect to the home page
+        function goHome() {
+            window.location.href = "index.html"; // Replace with your actual home page URL
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Tools & Resources</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABpT/RvLk4lQ4ao4puhgFISdVYJ2zN2c/z8LKh8v5Fg7I1z7FaaV7At" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        section {
+            padding: 50px 0;
+        }
+        #navbar {
+            position: sticky;
+            top: 0;
+            background-color: #343a40;
+        }
+        #navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 5px;
+        }
+        #navbar a:hover {
+            background-color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Menu -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Cybersecurity Tools</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#threat-map">Threat Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ai-playbook">AI Playbook</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#crowdsourced">Crowdsourced Intel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blockchain-intel">Blockchain Intel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#incident-simulator">Incident Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#external-intel">External Intel</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Interactive Threat Map Component -->
+        <section id="threat-map">
+            <h2 class="text-center">Interactive Threat Map</h2>
+            <div id="threat-map-container" class="text-center">
+                <p>Loading map...</p>
+            </div>
+        </section>
+
+        <!-- AI-Powered Security Playbook Component -->
+        <section id="ai-playbook">
+            <h2 class="text-center">AI-Powered Security Playbooks</h2>
+            <p class="text-center">Stay updated with the latest AI-generated security playbooks.</p>
+            <div class="text-center">
+                <button id="generate-playbook" class="btn btn-primary">Generate Playbook</button>
+            </div>
+            <div id="playbook-result" class="mt-4 text-center"></div>
+        </section>
+
+        <!-- Crowdsourced Threat Intelligence Component -->
+        <section id="crowdsourced">
+            <h2 class="text-center">Crowdsourced Threat Intelligence</h2>
+            <p class="text-center">Collaborate with experts to share and learn about emerging threats.</p>
+            <div class="text-center">
+                <button id="fetch-intel" class="btn btn-primary">Fetch Latest Threat Intel</button>
+            </div>
+            <div id="intel-result" class="mt-4 text-center"></div>
+        </section>
+
+        <!-- Blockchain-Based Threat Intelligence Component -->
+        <section id="blockchain-intel">
+            <h2 class="text-center">Blockchain-Based Threat Intelligence</h2>
+            <p class="text-center">Securely share threat intelligence with transparency using blockchain technology.</p>
+            <div id="blockchain-result" class="mt-4 text-center">
+                <p>Blockchain integration will be available soon!</p>
+            </div>
+        </section>
+
+        <!-- Incident Response Simulator Component -->
+        <section id="incident-simulator">
+            <h2 class="text-center">Incident Response Simulator</h2>
+            <p class="text-center">Simulate and practice responses to various cybersecurity incidents.</p>
+            <div class="text-center">
+                <button id="simulate-incident" class="btn btn-primary">Start Simulation</button>
+            </div>
+            <div id="simulation-result" class="mt-4 text-center"></div>
+        </section>
+
+        <!-- External Threat Intelligence Feed Component -->
+        <section id="external-intel">
+            <h2 class="text-center">External Threat Intelligence Feed</h2>
+            <div class="text-center">
+                <button id="fetch-threat-data" class="btn btn-primary">Fetch Threat Data</button>
+            </div>
+            <div id="threat-feed" class="mt-4 text-center"></div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center my-5">
+        <p>&copy; 2024 Cybersecurity Tools Hub. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Shodan API key and URL for fetching threat data
+        var shodanApiKey = "YOUR_SHODAN_API_KEY"; // Replace with your actual Shodan API key
+        var shodanUrl = `https://api.shodan.io/shodan/host/search?key=${shodanApiKey}&query=port:22`;
+
+        // Fetching data from Shodan API for active IP addresses on port 22 (SSH)
+        fetch(shodanUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Parse and show data
+                if (data.matches) {
+                    var mapHtml = "<h4>Live Threat Map (SSH exposed ports)</h4><ul>";
+                    data.matches.forEach(function(item) {
+                        mapHtml += `<li>IP: ${item.ip_str}, Location: ${item.location.country_name}, Hostname: ${item.hostnames.join(', ')}</li>`;
+                    });
+                    mapHtml += "</ul>";
+                    document.getElementById('threat-map-container').innerHTML = mapHtml;
+                } else {
+                    document.getElementById('threat-map-container').innerHTML = "<p>No live threats found for this query.</p>";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('threat-map-container').innerHTML = "<p>Failed to load threat data.</p>";
+            });
+
+        // Simulating the AI playbook generation (Mocked data)
+        $("#generate-playbook").click(function() {
+            var playbook = "<h4>AI-Generated Security Playbook</h4><p>1. Detect unusual network traffic. <br>2. Isolate compromised machines. <br>3. Implement incident containment. <br>4. Notify key stakeholders.</p>";
+            $("#playbook-result").html(playbook);
+        });
+
+        // Crowdsourced Threat Intelligence (Using AbuseIPDB API)
+        $("#fetch-intel").click(function() {
+            $.get("https://api.abuseipdb.com/api/v2/blacklist", {
+                "key": "YOUR_API_KEY"
+            }, function(data) {
+                if (data && data.data) {
+                    var intelHtml = "<ul>";
+                    data.data.forEach(function(item) {
+                        intelHtml += "<li>IP: " + item.ip + " - Confidence Score: " + item.abuseConfidenceScore + "</li>";
+                    });
+                    intelHtml += "</ul>";
+                    $("#intel-result").html(intelHtml);
+                } else {
+                    $("#intel-result").html("<p>No intelligence found.</p>");
+                }
+            });
+        });
+
+        // External Threat Data Fetch using AbuseIPDB API
+        $("#fetch-threat-data").click(function() {
+            $.get("https://api.abuseipdb.com/api/v2/blacklist", {
+                "key": "YOUR_API_KEY"
+            }, function(data) {
+                if (data && data.data) {
+                    var feedHtml = "<ul>";
+                    data.data.forEach(function(item) {
+                        feedHtml += "<li>" + item.ip + ": " + item.abuseConfidenceScore + "</li>";
+                    });
+                    feedHtml += "</ul>";
+                    $("#threat-feed").html(feedHtml);
+                } else {
+                    $("#threat-feed").html("<p>No data found.</p>");
+                }
+            });
+        });
+
+        // Incident Simulator Mock (Real implementations would use platforms like TheHive)
+        $("#simulate-incident").click(function() {
+            var simulationResults = "<h4>Incident Simulation Results</h4><p>Incident: Ransomware Detected. Response: Immediate isolation of affected systems. Backup restoration initiated.</p>";
+            $("#simulation-result").html(simulationResults);
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybK6TzU5M8zN2Uw8hZy4uVVgShEpiVY1be3xy1Rbb6xM6xj9nA" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8Fq3zzIUX28vY5WJ7msfM7l0bR4cWbBjmJ9l8p2tOBsw2pF" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecuraStep - Step-by-step security in Digital Age</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: Calibri, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 0.8em;
+      color: #777;
+      margin-top: 0;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    .main-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-container {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1.1em;
+      width: 50%;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1.1em;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .results {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+
+    .checkbox-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      transform: scale(0.9);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+
+    #search-bar {
+      width: 40%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .note {
+      font-size: 1.2em;
+      color: red;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .trusted-list {
+      margin-bottom: 30px;
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    .other {
+      margin-top: 20px;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      margin-right: 15px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #333;
+      font-size: 2em;
+    }
+
+    p {
+      font-size: 0.8em;
+      color: #777;
+      margin: 0;
+    }
+
+    /* CSS for the weather info at top-right */
+    .weather-info {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      font-size: 1.1em;
+      color: #333;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="logo.png" alt="SecuraStep Logo" class="logo" />
+    <div>
+      <h1>SecuraStep</h1>
+      <p>Step-by-step security in Digital Age</p>
+    </div>
+  </div>
+  
+  <h2>Integrated search for OSINT Information</h2>
+  
+  <div class="main-container">
+    <div class="input-container">
+      <input type="text" id="inputField" placeholder="Enter IP Address or Domain" />
+    </div>
+    
+    <div class="checkbox-container" id="ipCheckboxes">
+      <label><input type="checkbox" id="abuseipdb-ip" onclick="openAbuseIPDB()"> IP.AbuseIPDB</label>
+      <label><input type="checkbox" id="alienvault-ip" onclick="openAlienVault()"> IP.AlienVault OTX</label>
+      <label><input type="checkbox" id="talos-ip" onclick="openTalos()"> IP.Talos Intelligence</label>
+      <label><input type="checkbox" id="virustotal-ip" onclick="virustotal()"> IP.VirusTotal</label>
+      <label><input type="checkbox" id="whois-ip" onclick="openWhois()"> IP.Whois (DomainTools)</label>
+    </div>
+    
+    <div class="checkbox-container" id="domainCheckboxes">
+      <label><input type="checkbox" id="abuseipdb-domain" onclick="openAbuseIPDBDomain()"> D.AbuseIPDB</label>
+      <label><input type="checkbox" id="alienvault-domain" onclick="openAlienVaultDomain()"> D.AlienVault OTX</label>
+      <label><input type="checkbox" id="talos-domain" onclick="openTalosDomain()"> D.Talos Intelligence</label>
+      <label><input type="checkbox" id="threatminer-domain" onclick="openThreatMiner()"> D.ThreatMiner</label>
+      <label><input type="checkbox" id="virustotal-domain" onclick="openVirusTotal()"> D.VirusTotal</label>
+      <label><input type="checkbox" id="bluecoat-domain" onclick="openBluecoat()"> D.Bluecoat SiteReview</label>
+      <label><input type="checkbox" id="whois-domain" onclick="openWhoisDomain()"> D.Whois (DomainTools)</label>
+      <label><input type="checkbox" id="sslLabs-domain" onclick="openSslLabs()"> SSL Labs</label>
+      <label><input type="checkbox" id="crtsh-domain" onclick="openCrtsh()"> Crt.sh</label>
+    </div>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <h1>Open-Source Threat Intelligence Platforms</h1>
+  <p style="text-align:center;font-size:0.8em;">
+    Upon exploding open-source threat intelligence resources, it can be challenging to determine which sites are trustworthy.
+    Therefore, we have consolidated a list of the top webpages based on their reputation that can be used by analysts in day-to-day activities.
+  </p>
+  
+  <div class="note">
+    <p><strong>Note:</strong> Click URLs based on your own risk. Always verify the source for accuracy and trustworthiness.</p>
+  </div>
+
+  <input type="text" id="search-bar" placeholder="Search by type, URL, or purpose" onkeyup="searchTable()" />
+  
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Category</th>
+        <th>URL</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+
+  <script>
+    fetch('table-content.html').then(response => response.text()).then(data => {
+      document.getElementById('table-body').innerHTML = data;
+    }).catch(error => console.error('Error loading table content:', error));
+
+    function searchTable() {
+      const input = document.getElementById('search-bar');
+      const filter = input.value.toLowerCase();
+      const rows = document.querySelectorAll('#table-body tr');
+      rows.forEach(row => {
+        const cells = row.getElementsByTagName('td');
+        let match = false;
+        for (let i = 0; i < cells.length; i++) {
+          const cell = cells[i];
+          if (cell && cell.textContent.toLowerCase().indexOf(filter) > -1) {
+            match = true;
+            break;
+          }
+        }
+        row.style.display = match ? '' : 'none';
+      });
+    }
+
+    window.onload = getWeatherByIP;
+
+    function getWeatherByIP() {
+      const ipapiKey = '2d69ff6d0c0f4229b1e6a279653eeb45';
+      const weatherApiKey = '51fe0d5051214c0abd571136242411';
+      
+      fetch(`https://api.ipapi.com/api/check?access_key=${ipapiKey}`).then(response => response.json()).then(data => {
+        const city = data.city;
+        const latitude = data.latitude;
+        const longitude = data.longitude;
+        
+        fetch(`https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${latitude},${longitude}&aqi=no`)
+          .then(weatherResponse => weatherResponse.json())
+          .then(weatherData => {
+            const weather = weatherData.current.condition.text;
+            const temperature = weatherData.current.temp_c;
+            document.getElementById('weather-data').innerHTML = `Weather in ${city}: ${weather}, ${temperature}°C`;
+          })
+          .catch(error => {
+            console.error('Error fetching weather data:', error);
+            document.getElementById('weather-data').innerHTML = 'Unable to fetch weather data.';
+          });
+      }).catch(error => {
+        console.error('Error fetching IP location:', error);
+        document.getElementById('weather-data').innerHTML = 'Unable to fetch location data.';
+      });
+    }
+  </script>
+
+  <!-- Weather info box at top right -->
+  <div class="weather-info" id="weather-info">
+    <p id="weather-data">Fetching weather info...</p>
+  </div>
+
+</body>
+</html>

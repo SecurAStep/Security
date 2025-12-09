@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Advanced Cyber Hygiene Assessment</title>
+    <style>
+        /* --- FONT CHANGE APPLIED HERE --- */
+        body {
+            font-family: "Aptos Serif", Georgia, "Times New Roman", Times, serif; 
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        /* --------------------------------- */
+        header {
+            background-color: #004085;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 20px 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #004085;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #007bff;
+            margin-top: 35px;
+            padding-left: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+        }
+        .question label {
+            font-size: 16px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .question input[type="radio"] {
+            margin-right: 5px;
+        }
+        .button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 17px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #1e7e34;
+        }
+        #results-summary, #suggestions-output {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff3cd; 
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            display: none;
+        }
+        .summary-item {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .score-good { color: #28a745; font-weight: bold; }
+        .score-medium { color: #ffc107; font-weight: bold; }
+        .score-bad { color: #dc3545; font-weight: bold; }
+        .suggestions-list {
+            list-style: disc;
+            margin-left: 20px;
+        }
+        .export-button {
+            background-color: #17a2b8; /* Info/secondary color */
+            margin-left: 10px;
+        }
+        .export-button:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Advanced Cyber Hygiene Assessment: Holistic Security Scorecard</h1>
+    <p>A detailed questionnaire covering Authentication, Data, and Network Security.</p>
+</header>
+
+<div class="container">
+
+    <div id="intro">
+        <h2>Initiate Assessment</h2>
+        <p>Answer the following 12 questions across three main security categories to receive your detailed score and personalized action plan.</p>
+        <button class="button" onclick="showQuestions()">Start Detailed Assessment</button>
+    </div>
+
+    <div id="questions" style="display: none;">
+        <h2>12-Point Cyber Hygiene Checklist</h2>
+
+        <h3>Category 1: Account & Authentication Security</h3>
+        
+        <div class="question">
+            <label for="q1">1. Do you use a **unique, complex password** AND **MFA (Multi-Factor Authentication)** on your primary email account?</label><br>
+            <input type="radio" name="auth-q1" value="yes"> Yes
+            <input type="radio" name="auth-q1" value="no"> No
+        </div>
+
+        <div class="question">
+            <label for="q2">2. Do you use a **dedicated password manager** (like Bitwarden, 1Password, etc.) to generate and store all passwords?</label><br>
+            <input type="radio" name="auth-q2" value="yes"> Yes
+            <input type="radio" name="auth-q2" value="no"> No
+        </div>
+
+        <div class="question">
+            <label for="q3">3. Have you reviewed and disabled all unused **app permissions** connected to your Google/Microsoft/Social accounts in the last 6 months?</label><br>
+            <input type="radio" name="auth-q3" value="yes"> Yes
+            <input type="radio" name="auth-q3" value="no"> No
+        </div>
+
+        <div class="question">
+            <label for="q4">4. Do you use **Biometrics (Fingerprint/Face ID)** or a strong PIN/Passcode to lock all smartphones and tablets?</label><br>
+            <input type="radio" name="auth-q4" value="yes"> Yes
+            <input type="radio" name="auth-q4" value="no"> No
+        </div>
+        
+        <h3>Category 2: Device & Data Protection</h3>
+
+        <div class="question">
+            <label for="q5">5. Is **full-disk encryption** (BitLocker, FileVault, etc.) enabled on your primary laptop/PC?</label><br>
+            <input type="radio" name="data-q5" value="yes"> Yes
+            <input type="radio" name="data-q5" value="no"> No
+        </div>
+        
+        <div class="question">
+            <label for="q6">6. Do you automatically patch/update your OS and web browser **at least once per month**?</label><br>
+            <input type="radio" name="data-q6" value="yes"> Yes
+            <input type="radio" name="data-q6" value="no"> No
+        </div>
+
+        <div class="question">
+            <label for="q7">7. Do you follow the **3-2-1 backup rule** (3 copies, 2 media types, 1 copy off-site) for all critical personal data?</label><br>
+            <input type="radio" name="data-q7" value="yes"> Yes
+            <input type="radio" name="data-q7" value="no"> No
+        </div>
+
+        <div class="question">
+            <label for="q8">8. Do you use or have you recently run a reputable **Anti-Malware/Anti-Virus** solution on your primary devices?</label><br>
+            <input type="radio" name="data-q8" value="yes"> Yes
+            <input type="radio" name="data-q8" value="no"> No
+        </div>
+
+        <h3>Category 3: Network & Operational Security</h3>
+
+        <div class="question">
+            <label for="q9">9. Do you **always use a VPN** when connecting to public or untrusted Wi-Fi networks?</label><br>
+            <input type="radio" name="network-q9" value="yes"> Yes
+            <input type="radio" name="network-q9" value="no"> No
+        </div>
+        
+        <div class="question">
+            <label for="q10">10. Do you change the default password on **new IoT/Smart home devices** (e.g., cameras, routers)?</label><br>
+            <input type="radio" name="network-q10" value="yes"> Yes
+            <input type="radio" name="network-q10" value="no"> No
+        </div>
+
+        <div class="question">
+            <label for="q11">11. Are you confident you can distinguish a **spear-phishing** email from a legitimate one?</label><br>
+            <input type="radio" name="network-q11" value="yes"> Yes
+            <input type="radio" name="network-q11" value="no"> No
+        </div>
+
+        <div class="question">
+            <label for="q12">12. Do you refrain from using **personal devices/accounts** for accessing high-sensitivity work/professional information?</label><br>
+            <input type="radio" name="network-q12" value="yes"> Yes
+            <input type="radio" name="network-q12" value="no"> No
+        </div>
+
+        <button class="button" onclick="generateDetailedReport()">Generate Detailed Report</button>
+    </div>
+
+    <div id="results-summary">
+        <h2>🎯 Your Holistic Cyber Hygiene Scorecard</h2>
+        <p>Your security posture broken down by category (4 points per category):</p>
+        
+        <div class="summary-item">
+            <strong>Category 1: Account & Authentication:</strong> <span id="score-auth"></span>
+        </div>
+        <div class="summary-item">
+            <strong>Category 2: Device & Data Protection:</strong> <span id="score-data"></span>
+        </div>
+        <div class="summary-item">
+            <strong>Category 3: Network & Operational Security:</strong> <span id="score-network"></span>
+        </div>
+        
+        <hr style="margin-top: 15px;">
+        <div class="summary-item">
+            <strong>Overall Hygiene Score:</strong> <span id="score-total"></span>
+        </div>
+        <button class="button export-button" onclick="exportReport()">Export Action Plan (CSV)</button>
+    </div>
+
+    <div id="suggestions-output">
+        <h2>🛠️ Personalized Action Plan</h2>
+        <p>Based on your incomplete tasks, here are the high-priority steps to improve your cyber hygiene:</p>
+        <ul class="suggestions-list" id="suggestions-list">
+            </ul>
+    </div>
+
+</div>
+
+<script>
+    const TOTAL_QUESTIONS = 12;
+    // Global variable to hold the detailed report data for export
+    let exportData = [];
+
+    function showQuestions() {
+        document.getElementById('intro').style.display = 'none';
+        document.getElementById('questions').style.display = 'block';
+    }
+
+    function getRadioValue(name) {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        return checked ? checked.value : null;
+    }
+
+    function checkCompletion() {
+        for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+            let name = '';
+            if (i >= 1 && i <= 4) name = `auth-q${i}`;
+            else if (i >= 5 && i <= 8) name = `data-q${i}`;
+            else if (i >= 9 && i <= 12) name = `network-q${i}`;
+            
+            if (!getRadioValue(name)) {
+                return false; 
+            }
+        }
+        return true; 
+    }
+
+    function getRemediationDetails() {
+        // Maps question ID to detailed remediation info, prioritization, and risk score
+        return {
+            'auth-q1': {
+                action: "Secure Primary Email (MFA)", 
+                remediation: "Enable MFA (preferably app-based TOTP) and use a unique password on your main email account. The email account is the master key to your digital life.",
+                link: "https://www.cisa.gov/stop-think-connect/tips-and-advice/multi-factor-authentication",
+                priority: "CRITICAL",
+                risk: "HIGH (Loss of all accounts)"
+            },
+            'auth-q2': {
+                action: "Implement Password Manager",
+                remediation: "Download and start using a password manager like Bitwarden or 1Password to generate and store complex, non-reused passwords.",
+                link: "https://bitwarden.com/",
+                priority: "HIGH",
+                risk: "MEDIUM (Credential stuffing attacks)"
+            },
+            'auth-q3': {
+                action: "Audit App Permissions",
+                remediation: "Review your Google/Microsoft/Social security settings and revoke access tokens for old or unknown third-party apps.",
+                link: "https://myaccount.google.com/permissions", 
+                priority: "MEDIUM",
+                risk: "LOW (Lateral access to data)"
+            },
+            'auth-q4': {
+                action: "Enable Biometrics/Passcode",
+                remediation: "Ensure all mobile devices (smartphones, tablets) have strong biometrics (fingerprint/face) or a 6-digit PIN/passcode enabled.",
+                link: "N/A (Device settings)",
+                priority: "MEDIUM",
+                risk: "HIGH (Data theft upon device loss)"
+            },
+            'data-q5': {
+                action: "Enable Full-Disk Encryption (FDE)",
+                remediation: "Activate BitLocker (Windows), FileVault (macOS), or LUKS (Linux) to encrypt your entire hard drive, protecting data at rest.",
+                link: "N/A (OS settings)",
+                priority: "HIGH",
+                risk: "HIGH (Physical theft of data)"
+            },
+            'data-q6': {
+                action: "Automate Software Patching",
+                remediation: "Set your operating system, browsers, and critical applications (e.g., Adobe, Java) to automatically update to close known vulnerabilities quickly.",
+                link: "https://www.cisa.gov/stop-think-connect/tips-and-advice/software-updates-and-patches",
+                priority: "CRITICAL",
+                risk: "HIGH (Exploitation by malware)"
+            },
+            'data-q7': {
+                action: "Implement 3-2-1 Backup Strategy",
+                remediation: "Establish a 3-2-1 backup strategy: 3 copies of your data, 2 different media types, 1 copy off-site (e.g., cloud backup).",
+                link: "N/A",
+                priority: "CRITICAL",
+                risk: "CRITICAL (Ransomware/Data Loss)"
+            },
+            'data-q8': {
+                action: "Install/Run Anti-Malware",
+                remediation: "Use a reputable anti-virus/anti-malware solution and ensure it's up-to-date and scheduled for regular full scans.",
+                link: "N/A",
+                priority: "MEDIUM",
+                risk: "MEDIUM (Malware infection)"
+            },
+            'network-q9': {
+                action: "Use VPN on Public Wi-Fi",
+                remediation: "Subscribe to a trusted VPN service and activate it every time you connect to public Wi-Fi or networks you don't control.",
+                link: "N/A (Commercial service required)",
+                priority: "HIGH",
+                risk: "MEDIUM (Eavesdropping/MiTM attacks)"
+            },
+            'network-q10': {
+                action: "Change IoT Default Passwords",
+                remediation: "Immediately change default usernames and passwords on all new smart/IoT devices (router, cameras, voice assistants) to prevent easy access.",
+                link: "N/A (Device manuals)",
+                priority: "HIGH",
+                risk: "HIGH (Network backdoors)"
+            },
+            'network-q11': {
+                action: "Enhance Phishing Awareness",
+                remediation: "Practice identifying common phishing red flags: check sender address, hover over links, and be suspicious of urgent/threatening language.",
+                link: "https://www.cisa.gov/stop-think-connect/tips-and-advice/recognize-and-avoid-phishing-scams",
+                priority: "HIGH",
+                risk: "CRITICAL (Initial compromise/breach)"
+            },
+            'network-q12': {
+                action: "Separate Work/Personal Use",
+                remediation: "Avoid mixing personal activities (social media, torrents) with high-sensitivity work accounts or using personal devices for work unless authorized and secured.",
+                link: "N/A (Policy/Discipline)",
+                priority: "MEDIUM",
+                risk: "MEDIUM (Data leakage/Policy violation)"
+            }
+        };
+    }
+
+    function generateDetailedReport() {
+        if (!checkCompletion()) {
+            alert('🚨 Please answer all 12 questions before generating your detailed report!');
+            return;
+        }
+
+        const answers = {
+            'auth-q1': getRadioValue('auth-q1'), 'auth-q2': getRadioValue('auth-q2'),
+            'auth-q3': getRadioValue('auth-q3'), 'auth-q4': getRadioValue('auth-q4'),
+            'data-q5': getRadioValue('data-q5'), 'data-q6': getRadioValue('data-q6'),
+            'data-q7': getRadioValue('data-q7'), 'data-q8': getRadioValue('data-q8'),
+            'network-q9': getRadioValue('network-q9'), 'network-q10': getRadioValue('network-q10'),
+            'network-q11': getRadioValue('network-q11'), 'network-q12': getRadioValue('network-q12')
+        };
+        
+        // Reset export data
+        exportData = [];
+        const remediationDetails = getRemediationDetails();
+
+        let scoreAuth = 0;
+        let scoreData = 0;
+        let scoreNetwork = 0;
+        const incompleteTasks = [];
+
+        // Calculate Scores and build the export data list for incomplete tasks
+        const processCategory = (start, end, categoryName, scoreVar) => {
+            for (let i = start; i <= end; i++) {
+                const qKey = (i >= 1 && i <= 4) ? `auth-q${i}` : (i >= 5 && i <= 8) ? `data-q${i}` : `network-q${i}`;
+                if (answers[qKey] === 'yes') {
+                    eval(`${scoreVar}++;`); // Dynamically increment score
+                } else {
+                    incompleteTasks.push(qKey);
+                    const details = remediationDetails[qKey];
+                    // Add structured data for export
+                    exportData.push({
+                        id: qKey,
+                        category: categoryName,
+                        actionableItem: details.action,
+                        priority: details.priority,
+                        riskScore: details.risk,
+                        remediationSteps: details.remediation,
+                        link: details.link
+                    });
+                }
+            }
+        };
+
+        processCategory(1, 4, 'Account & Authentication', 'scoreAuth');
+        processCategory(5, 8, 'Device & Data Protection', 'scoreData');
+        processCategory(9, 12, 'Network & Operational Security', 'scoreNetwork');
+
+        const totalScore = scoreAuth + scoreData + scoreNetwork;
+
+        // 3. Display Scores (same as before)
+        document.getElementById('questions').style.display = 'none';
+        document.getElementById('results-summary').style.display = 'block';
+        document.getElementById('suggestions-output').style.display = 'block';
+
+        function formatScore(score) {
+            let className = 'score-bad';
+            if (score >= 3) className = 'score-good'; 
+            else if (score === 2) className = 'score-medium';
+            return `<span class="${className}">${score} / 4 Points</span>`;
+        }
+
+        function formatTotalScore(score) {
+            let className = 'score-bad';
+            if (score >= 10) className = 'score-good'; 
+            else if (score >= 7) className = 'score-medium'; 
+            return `<span class="${className}">${score} / 12 Total Points (${(score/12 * 100).toFixed(0)}%)</span>`;
+        }
+
+        document.getElementById('score-auth').innerHTML = formatScore(scoreAuth);
+        document.getElementById('score-data').innerHTML = formatScore(scoreData);
+        document.getElementById('score-network').innerHTML = formatScore(scoreNetwork);
+        document.getElementById('score-total').innerHTML = formatTotalScore(totalScore);
+
+
+        // 4. Generate Suggestions (using exportData for display as well)
+        generateSuggestions(exportData);
+    }
+
+    function generateSuggestions(data) {
+        const suggestionsList = document.getElementById('suggestions-list');
+        suggestionsList.innerHTML = '';
+        
+        if (data.length === 0) {
+            suggestionsList.innerHTML = '<li>🎉 You answered "Yes" to all questions! Your hygiene is excellent. Maintain this discipline!</li>';
+            document.getElementById('suggestions-output').style.backgroundColor = '#d4edda'; 
+            document.getElementById('suggestions-output').style.borderColor = '#c3e6cb';
+        } else {
+             document.getElementById('suggestions-output').style.backgroundColor = '#fff3cd'; 
+             document.getElementById('suggestions-output').style.borderColor = '#ffeeba';
+            
+            // Sort by Priority (CRITICAL, HIGH, MEDIUM, LOW - simple string comparison works here)
+            const priorityOrder = { 'CRITICAL': 1, 'HIGH': 2, 'MEDIUM': 3, 'LOW': 4 };
+            data.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+            
+            data.forEach(item => {
+                const li = document.createElement('li');
+                let linkHtml = item.link && item.link !== 'N/A' ? ` (<a href="${item.link}" target="_blank">Remediation Link</a>)` : '';
+                li.innerHTML = `
+                    **${item.actionableItem}** (${item.priority}, Risk: ${item.riskScore}): ${item.remediation} ${linkHtml}
+                `;
+                suggestionsList.appendChild(li);
+            });
+        }
+    }
+
+    /**
+     * Downloads the structured incomplete tasks as a CSV file.
+     */
+    function exportReport() {
+        if (exportData.length === 0) {
+            const totalScoreText = document.getElementById('score-total').innerText;
+            
+            // If the user scored 100%, provide a positive confirmation instead of an empty file.
+            if (totalScoreText.includes('12 / 12')) {
+                alert("🎉 Your score is 100%! No action plan is needed for export.");
+                return;
+            }
+            // Should not happen if generateDetailedReport ran correctly and score is not 100%.
+            alert("No remediation items found, or report not generated yet.");
+            return;
+        }
+
+        const header = [
+            "ID",
+            "Category",
+            "Actionable Item",
+            "Prioritization",
+            "Risk Score",
+            "Remediation Steps",
+            "External Link"
+        ];
+
+        let csv = header.join(",") + "\n";
+        
+        // Append data rows
+        exportData.forEach(item => {
+            // Escape double quotes and ensure values are quoted to handle commas in text
+            const sanitize = (value) => {
+                if (value === null || value === undefined) return "";
+                const str = String(value).replace(/"/g, '""');
+                return `"${str}"`;
+            };
+
+            const row = [
+                sanitize(item.id),
+                sanitize(item.category),
+                sanitize(item.actionableItem),
+                sanitize(item.priority),
+                sanitize(item.riskScore),
+                sanitize(item.remediationSteps),
+                sanitize(item.link)
+            ];
+            csv += row.join(",") + "\n";
+        });
+
+        // Trigger the download
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute("href", url);
+        link.setAttribute("download", "CyberHygiene_ActionPlan_" + new Date().toISOString().slice(0, 10) + ".csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</body>
+</html>

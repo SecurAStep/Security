@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Header Parser with Authentication and Hops</title>
+  <style>
+    body {
+      font-family: Calibri, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      font-family: monospace;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+    .button-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .output {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+    .header-item {
+      margin-bottom: 10px;
+    }
+    .header-item span {
+      font-weight: bold;
+    }
+    .auth-checks, .hops {
+      margin-top: 20px;
+    }
+    .hop {
+      padding: 5px;
+      background-color: #e0e0e0;
+      margin-bottom: 5px;
+      border-radius: 3px;
+    }
+    .headers-found {
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+      word-wrap: break-word;
+    }
+    th {
+      background-color: #f2f2f2;
+      width: 30%;  /* Adjust the width of Header Name */
+    }
+    td {
+      width: 70%;  /* Adjust the width of Header Value */
+    }
+    .empty {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Email Header Parser with Authentication and Hops</h1>
+  <p>Enter the email header below to parse and extract useful details, including SPF, DKIM, DMARC results, and hops.</p>
+
+  <textarea id="headerInput" placeholder="Paste email header here..."></textarea>
+
+  <div class="button-container">
+    <button onclick="parseHeader()">Parse Header</button>
+  </div>
+
+  <div id="parsedOutput" class="output" style="display: none;">
+    <div id="from" class="header-item"></div>
+    <div id="to" class="header-item"></div>
+    <div id="subject" class="header-item"></div>
+    <div id="date" class="header-item"></div>
+
+    <div class="auth-checks">
+      <div id="spf" class="header-item"></div>
+      <div id="dkim" class="header-item"></div>
+      <div id="dmarc" class="header-item"></div>
+    </div>
+
+    <div class="hops">
+      <h3>Email Hops</h3>
+      <div id="hops"></div>
+    </div>
+
+    <div class="headers-found">
+      <h3>Headers Found in the Pasted Section</h3>
+      <table id="headersTable">
+        <thead>
+          <tr>
+            <th>Header Name</th>
+            <th>Header Value</th>
+          </tr>
+        </thead>
+        <tbody id="headersBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function parseHeader() {
+      const headerText = document.getElementById('headerInput').value.trim();
+      
+      if (!headerText) {
+        alert('Please paste an email header!');
+        return;
+      }
+
+      const headerLines = headerText.split('\n');
+      let from = '';
+      let to = '';
+      let subject = '';
+      let date = '';
+      let spfResult = '';
+      let dkimResult = '';
+      let dmarcResult = '';
+      let hops = [];
+      let allHeaders = [];
+      
+      // Regular expressions for matching header fields
+      const fromRegex = /^From:\s*(.+)$/i;
+      const toRegex = /^To:\s*(.+)$/i;
+      const subjectRegex = /^Subject:\s*(.+)$/i;
+      const dateRegex = /^Date:\s*(.+)$/i;
+      const spfRegex = /spf=([^\s;]+)/i;
+      const dkimRegex = /dkim=([^\s;]+)/i;
+      const dmarcRegex = /dmarc=([^\s;]+)/i;
+      const receivedRegex = /^Received:\s*(.+)$/i;
+
+      // Iterate through each line to extract header values
+      headerLines.forEach((line, index) => {
+        allHeaders.push({ name: line.split(':')[0].trim(), value: line.trim() });
+
+        if (fromRegex.test(line)) {
+          from = line.match(fromRegex)[1].trim();
+        } else if (toRegex.test(line)) {
+          to = line.match(toRegex)[1].trim();
+        } else if (subjectRegex.test(line)) {
+          subject = line.match(subjectRegex)[1].trim();
+        } else if (dateRegex.test(line)) {
+          date = line.match(dateRegex)[1].trim();
+        } else if (spfRegex.test(line)) {
+          spfResult = line.match(spfRegex)[1].trim();
+        } else if (dkimRegex.test(line)) {
+          dkimResult = line.match(dkimRegex)[1].trim();
+        } else if (dmarcRegex.test(line)) {
+          dmarcResult = line.match(dmarcRegex)[1].trim();
+        } else if (receivedRegex.test(line)) {
+          hops.push(line.match(receivedRegex)[1].trim());
+        }
+      });
+
+      // Display parsed information
+      if (from || to || subject || date || spfResult || dkimResult || dmarcResult || hops.length) {
+        document.getElementById('parsedOutput').style.display = 'block';
+
+        document.getElementById('from').innerHTML = `<span>From:</span> ${from || 'Not found'}`;
+        document.getElementById('to').innerHTML = `<span>To:</span> ${to || 'Not found'}`;
+        document.getElementById('subject').innerHTML = `<span>Subject:</span> ${subject || 'Not found'}`;
+        document.getElementById('date').innerHTML = `<span>Date:</span> ${date || 'Not found'}`;
+
+        document.getElementById('spf').innerHTML = `<span>SPF Result:</span> ${spfResult || 'Not found'}`;
+        document.getElementById('dkim').innerHTML = `<span>DKIM Result:</span> ${dkimResult || 'Not found'}`;
+        document.getElementById('dmarc').innerHTML = `<span>DMARC Result:</span> ${dmarcResult || 'Not found'}`;
+
+        // Display hops (received headers)
+        const hopsContainer = document.getElementById('hops');
+        hopsContainer.innerHTML = '';
+        hops.forEach((hop, index) => {
+          const hopElement = document.createElement('div');
+          hopElement.classList.add('hop');
+          hopElement.textContent = `Hop ${index + 1}: ${hop}`;
+          hopsContainer.appendChild(hopElement);
+        });
+
+        // Display headers found in two columns
+        const headersBody = document.getElementById('headersBody');
+        headersBody.innerHTML = '';
+        allHeaders.forEach(header => {
+          const row = document.createElement('tr');
+          
+          const nameCell = document.createElement('td');
+          nameCell.textContent = header.name || 'Not found';
+          
+          const valueCell = document.createElement('td');
+          valueCell.textContent = header.value || 'Not found';
+          
+          // If there's no value, it will show 'Not found' or empty (via the empty class)
+          if (!header.value) valueCell.classList.add('empty');
+          
+          row.appendChild(nameCell);
+          row.appendChild(valueCell);
+          headersBody.appendChild(row);
+        });
+      } else {
+        alert('No valid header fields found.');
+      }
+    }
+  </script>
+
+</body>
+</html>

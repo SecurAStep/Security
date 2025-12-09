@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Streaming with Interactive Polls/Questions</title>
+
+  <!-- Include Socket.io Client -->
+  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.0.0/dist/socket.io.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .video-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+    }
+
+    .poll, .qa, .reactions {
+      background-color: white;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .poll button, .reaction button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .poll button:hover, .reaction button:hover {
+      background-color: #0056b3;
+    }
+
+    .qa input {
+      padding: 10px;
+      width: 70%;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .qa button {
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .qa button:hover {
+      background-color: #218838;
+    }
+
+    .reactions {
+      margin-top: 20px;
+    }
+
+    .reaction {
+      font-size: 24px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    #questionList {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Video Stream -->
+    <div class="video-container">
+      <h2>Live Stream</h2>
+      <iframe src="https://www.youtube.com/embed/your-video-id" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Poll Section -->
+    <div class="poll">
+      <h3>Poll: What is your favorite color?</h3>
+      <button class="vote" data-choice="Red">Red</button>
+      <button class="vote" data-choice="Blue">Blue</button>
+      <button class="vote" data-choice="Green">Green</button>
+      <div id="pollResults"></div>
+    </div>
+
+    <!-- Q&A Section -->
+    <div class="qa">
+      <h3>Live Q&A</h3>
+      <input type="text" id="questionInput" placeholder="Ask a question...">
+      <button id="submitQuestion">Submit</button>
+      <div id="questionList"></div>
+    </div>
+
+    <!-- Reactions Section -->
+    <div class="reactions">
+      <h3>Reactions</h3>
+      <button class="reaction" data-reaction="👍">👍</button>
+      <button class="reaction" data-reaction="👏">👏</button>
+      <button class="reaction" data-reaction="❤️">❤️</button>
+      <div id="reactionDisplay"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Initialize Socket.io
+    const socket = io('http://localhost:3000'); // Update with your server URL
+
+    // Polling
+    document.querySelectorAll('.vote').forEach(button => {
+      button.addEventListener('click', function() {
+        const choice = this.getAttribute('data-choice');
+        socket.emit('vote', choice); // Emit the vote to the server
+      });
+    });
+
+    socket.on('pollResults', function(results) {
+      document.getElementById('pollResults').innerHTML = `Red: ${results.Red}, Blue: ${results.Blue}, Green: ${results.Green}`;
+    });
+
+    // Live Q&A
+    document.getElementById('submitQuestion').addEventListener('click', function() {
+      const question = document.getElementById('questionInput').value;
+      if (question) {
+        socket.emit('submit-question', question); // Emit the question to the server
+      }
+    });
+
+    socket.on('question-list', function(questions) {
+      const questionList = document.getElementById('questionList');
+      questionList.innerHTML = questions.map(q => `<p>${q}</p>`).join('');
+    });
+
+    // Emoji Reactions
+    document.querySelectorAll('.reaction').forEach(button => {
+      button.addEventListener('click', function() {
+        const reaction = this.getAttribute('data-reaction');
+        socket.emit('reaction', reaction); // Emit the reaction to the server
+      });
+    });
+
+    socket.on('reaction', function(reaction) {
+      const reactionElement = document.createElement('div');
+      reactionElement.textContent = reaction;
+      document.getElementById('reactionDisplay').appendChild(reactionElement);
+    });
+  </script>
+
+</body>
+</html>

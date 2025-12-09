@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Analysis</title>
+    <style>
+        body {
+            font-family: 'Calibri', sans-serif;
+            margin: 30px;
+            background-color: #f0f4f7;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0d74c0;
+        }
+        .button:active {
+            background-color: #0b5e91;
+        }
+        .log-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .filter-input {
+            padding: 8px;
+            width: 100%;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: 'Calibri', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Log Analysis</h1>
+
+<!-- Section to input raw log -->
+<div class="log-container">
+    <h2>Input Raw Log Data</h2>
+    <textarea id="rawLogInput" rows="10" cols="80" placeholder="Paste raw log data here..."></textarea>
+    <button class="button" onclick="parseLog()">Parse Log</button>
+</div>
+
+<!-- Filters Section -->
+<div>
+    <h2>Filter Logs</h2>
+    <label>Date Filter:</label>
+    <input type="text" id="filterDate" class="filter-input" placeholder="Filter by Date" onkeyup="filterLogs()">
+    <label>Time Filter:</label>
+    <input type="text" id="filterTime" class="filter-input" placeholder="Filter by Time" onkeyup="filterLogs()">
+    <label>Sourcetype Filter:</label>
+    <input type="text" id="filterSourcetype" class="filter-input" placeholder="Filter by Sourcetype" onkeyup="filterLogs()">
+    <label>Message Filter:</label>
+    <input type="text" id="filterMessage" class="filter-input" placeholder="Filter by Message" onkeyup="filterLogs()">
+</div>
+
+<!-- Table to display parsed IOCs -->
+<table id="logTable" style="display:none;">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Sourcetype</th>
+            <th>Log Message</th>
+            <th>Email Addresses</th>
+            <th>Domains</th>
+            <th>URLs</th>
+            <th>File Hashes</th>
+            <th>IP Addresses</th>
+            <th>File Names</th>
+            <th>Mutexes</th>
+            <th>User-Agent</th>
+            <th>File Paths</th>
+            <th>Port Numbers</th>
+            <th>DNS Queries</th>
+            <th>Phone Numbers</th>
+            <th>SSL/TLS Certificates</th>
+            <th>Command-Line Arguments</th>
+            <th>Traffic Type</th>
+            <th>Usernames</th>
+            <th>Process Names</th>
+            <th>Session IDs</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+// Regular expressions for extracting IOCs with more strict patterns
+const regexPatterns = {
+    fileHash: /\b([a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64})\b/g, // MD5, SHA-1, SHA-256
+    ipAddress: /\b(?:\d{1,3}\.){3}\d{1,3}\b|\b([a-f0-9]{1,4}:){7}[a-f0-9]{1,4}\b/g, // IPv4 & IPv6
+    domain: /\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g, // Domain
+    url: /\b(?:https?|ftp):\/\/(?:[a-z0-9\-]+\.)+[a-z]{2,}(?:\/[^\s]*)?\b/g, // URL
+    email: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g, // Email
+    registryKey: /HKEY_CLASSES_ROOT\\[^\s]+/g, // Registry Keys
+    fileName: /\b(?:[A-Za-z0-9._-]+(?:\.exe|\.dll|\.bat|\.sh|\.bin))\b/g, // File Names
+    mutex: /\b[a-f0-9]{32}\b/g, // Mutexes
+    userAgent: /User-Agent:\s?([^\s]+)/g, // User-Agent
+    filePath: /\b(?:[A-Za-z]:\\|\/)?(?:[\w\-]+(?:\\|\/)?)+[\w\-]+(?:\.exe|\.dll|\.bat|\.sh|\.bin)?\b/g, // File Paths
+    port: /\b\d{1,5}\b/g, // Port Numbers
+    dnsQuery: /\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g, // DNS Queries
+    phoneNumber: /\b(?:\+?\d{1,2}[-.\s]?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}\b/g, // Phone Numbers
+    sslCert: /\b(?:-----BEGIN CERTIFICATE-----)[\s\S]+(?:-----END CERTIFICATE-----)\b/g, // SSL/TLS Certificates
+    cmdArgs: /\b(?:-?\w+)\s*=\s*("[^"]*"|\S*)\b/g, // Command-Line Args
+    trafficType: /\b(?:inbound|outbound)\b/i, // Traffic Type
+    username: /\b(?:admin|root|user|guest)\b/g, // Usernames (can expand)
+    processName: /\b(?:[a-z0-9-]+\.(exe|dll|bat))\b/g, // Process Names
+    sessionId: /\b[a-f0-9]{32}\b/g, // Session IDs
+};
+
+// Function to parse raw logs and extract IOCs
+function parseLog() {
+    const rawLog = document.getElementById('rawLogInput').value;
+    const logLines = rawLog.split('\n');
+    const parsedLogs = [];
+
+    logLines.forEach(line => {
+        const extractedData = {};
+
+        // Extract IOCs based on regex patterns
+        for (const [key, pattern] of Object.entries(regexPatterns)) {
+            const matches = line.match(pattern);
+            if (matches) {
+                extractedData[key] = matches.join(', ');
+            }
+        }
+
+        // Parse date, time, and sourcetype from the log
+        const logParts = line.split(' ');
+        if (logParts.length < 3) return;
+        const timestamp = logParts[0] + ' ' + logParts[1];
+        const date = timestamp.split(' ')[0];
+        const time = timestamp.split(' ')[1];
+        const sourcetype = logParts[2];
+        const message = logParts.slice(3).join(' ');
+
+        parsedLogs.push({
+            date,
+            time,
+            sourcetype,
+            message,
+            ...extractedData
+        });
+    });
+
+    // Display the parsed logs in the table
+    const tableBody = document.getElementById('logTable').querySelector('tbody');
+    tableBody.innerHTML = ''; // Clear previous content
+    parsedLogs.forEach(log => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${log.date}</td>
+            <td>${log.time}</td>
+            <td>${log.sourcetype}</td>
+            <td>${log.message}</td>
+            <td>${log.email || ''}</td>
+            <td>${log.domain || ''}</td>
+            <td>${log.url || ''}</td>
+            <td>${log.fileHash || ''}</td>
+            <td>${log.ipAddress || ''}</td>
+            <td>${log.fileName || ''}</td>
+            <td>${log.mutex || ''}</td>
+            <td>${log.userAgent || ''}</td>
+            <td>${log.filePath || ''}</td>
+            <td>${log.port || ''}</td>
+            <td>${log.dnsQuery || ''}</td>
+            <td>${log.phoneNumber || ''}</td>
+            <td>${log.sslCert || ''}</td>
+            <td>${log.cmdArgs || ''}</td>
+            <td>${log.trafficType || ''}</td>
+            <td>${log.username || ''}</td>
+            <td>${log.processName || ''}</td>
+            <td>${log.sessionId || ''}</td>
+            <td><button class="button" onclick="analyzeLog('${log.message}')">Analyze</button></td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    document.getElementById('logTable').style.display = 'table';
+}
+
+// Function to filter logs based on user input
+function filterLogs() {
+    const filterDate = document.getElementById('filterDate').value.toLowerCase();
+    const filterTime = document.getElementById('filterTime').value.toLowerCase();
+    const filterSourcetype = document.getElementById('filterSourcetype').value.toLowerCase();
+    const filterMessage = document.getElementById('filterMessage').value.toLowerCase();
+
+    const rows = document.getElementById('logTable').getElementsByTagName('tr');
+    for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        const dateCell = cells[0].textContent.toLowerCase();
+        const timeCell = cells[1].textContent.toLowerCase();
+        const sourcetypeCell = cells[2].textContent.toLowerCase();
+        const messageCell = cells[3].textContent.toLowerCase();
+
+        if (dateCell.includes(filterDate) && timeCell.includes(filterTime) && sourcetypeCell.includes(filterSourcetype) && messageCell.includes(filterMessage)) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SecurAStep - Step-by-step Security in the Digital Age</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+      body {
+        font-family: Calibri, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f9
+      }
+
+      h1 {
+        text-align: center;
+        color: #111;
+        margin-bottom: 10px
+      }
+
+      p {
+        text-align: center;
+        font-size: 1.8em;
+        color: #111;
+        margin-top: 0
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 1.5em;
+        color: #111
+      }
+
+      .main-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 4 8px 16px rgba(0, 0, 0, .2)
+      }
+
+      .input-container {
+        text-align: center
+      }
+
+      input[type=text] {
+        padding: 10px;
+        font-size: 1.1em;
+        width: 50%;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: 0
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 1.1em;
+        cursor: pointer;
+        background-color: #2a9d8f;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color .3s ease
+      }
+
+      button:hover {
+        background-color: #0056b3
+      }
+
+      .results {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, .1)
+      }
+
+      .error {
+        color: red;
+        font-weight: 700
+      }
+
+      .checkbox-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px
+      }
+
+      .checkbox-container input[type=checkbox] {
+        transform: scale(.9)
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        background-color: #edf2f4;
+        color: #000;
+        padding: 5px;
+        gap: 50px
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px
+      }
+
+      table,
+      td,
+      th {
+        border: 1px solid #ddd
+      }
+
+      td,
+      th {
+        padding: 10px;
+        text-align: left
+      }
+
+      th {
+        background-color: #f2f2f2;
+        text-align: center
+      }
+
+      #search-bar {
+        width: 40%;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px
+      }
+
+      .note {
+        font-size: 1.2em;
+        color: red;
+        text-align: center;
+        margin-bottom: 20px
+      }
+
+      .trusted-list {
+        margin-bottom: 30px;
+        font-size: 1.1em;
+        line-height: 1.6
+      }
+
+      .other {
+        margin-top: 20px;
+        font-size: 1.1em;
+        text-align: center
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px
+      }
+
+      .logo {
+        width: 100px;
+        margin-right: 15px
+      }
+
+      h1 {
+        margin: 0;
+        color: #333;
+        font-size: 2em
+      }
+
+      p {
+        font-size: .8em;
+        color: #777;
+        margin: 0
+      }
+
+      footer {
+        background-color: #143;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        margin-top: 40px
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none
+      }
+
+      a:hover {
+        text-decoration: underline
+      }
+
+      body.dark-mode {
+        background-color: #121212;
+        color: #0000
+      }
+
+      body.dark-mode h1,
+      body.dark-mode h2 {
+        color: #fff
+      }
+
+      body.dark-mode table,
+      body.dark-mode td,
+      body.dark-mode th {
+        border: 1px solid #black
+      }
+
+      body.dark-mode th {
+        background-color: #333
+      }
+
+      body.dark-mode td {
+        background-color: #222
+      }
+
+      body.dark-mode a {
+        color: #333
+      }
+
+      .dark-mode-toggle {
+        position: fixed;
+        top: 5px;
+        left: 5px;
+        background-color: #000;
+        color: #fff;
+        padding: 5px;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        border-radius: 5px;
+        z-index: 1000
+      }
+
+      .dark-mode-toggle:hover {
+        background-color: #0056b3
+      }
+    </style>
+  </head>
+  <body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+    <div class="header">
+      <img src="http://canarytokens.com/tags/3cerf1tufav6lajfvf3xx45wl/payments.js" alt="SecuraStep Logo" class="logo">
+      <div>
+        <h1>SecurAStep</h1>
+        <p>Step-by-step security in Digital Age</p>
+      </div>
+    </div>
+    <nav>
+      <div class="reference">
+        <a href="fraud_awareness.html">Cyber Fraud Awareness</a>
+      </div>
+      <div class="reference">
+        <a href="SOC_Knowledge_Base.html">SOC Topics</a>
+      </div>
+      <div class="reference">
+        <a href="Cyber_Hygiene.html">Cyber Hygiene</a>
+      </div>
+      <div class="reference">
+        <a href="Malware_Evolution.html">Malware Evolution</a>
+      </div>
+      </div>
+      <div class="reference">
+        <a href="Open-Source_Softwares.html">Open-Source Info</a>
+      </div>
+      <div class="reference">
+        <a href="Threat_Map..html">Threat Map</a>
+      </div>
+      <div class="reference">
+        <a href="email-header-parser">Email Header Analyzer</a>
+      </div>
+    </nav>
+    <h2>Integrated Search for OSINT Information</h2>
+    <div class="main-container">
+      <div class="input-container">
+        <input type="text" id="inputField" placeholder="Enter IP Address or Domain">
+      </div>
+      <div class="checkbox-container" id="ipCheckboxes">
+        <label>
+          <input type="checkbox" id="abuseipdb-ip" onclick='openUrl("ip","abuseipdb")'> IP.AbuseIPDB </label>
+        <label>
+          <input type="checkbox" id="alienvault-ip" onclick='openUrl("ip","alienvault")'> IP.AlienVault OTX </label>
+        <label>
+          <input type="checkbox" id="talos-ip" onclick='openUrl("ip","talos")'> IP.Talos Intelligence </label>
+        <label>
+          <input type="checkbox" id="virustotal-ip" onclick='openUrl("ip","virustotal")'> IP.VirusTotal </label>
+        <label>
+          <input type="checkbox" id="whois-ip" onclick='openUrl("ip","whois")'> IP.Whois (DomainTools) </label>
+      </div>
+      <div class="checkbox-container" id="domainCheckboxes">
+        <label>
+          <input type="checkbox" id="abuseipdb-domain" onclick='openUrl("domain","abuseipdb")'> D.AbuseIPDB </label>
+        <label>
+          <input type="checkbox" id="alienvault-domain" onclick='openUrl("domain","alienvault")'> D.AlienVault OTX </label>
+        <label>
+          <input type="checkbox" id="talos-domain" onclick='openUrl("domain","talos")'> D.Talos Intelligence </label>
+        <label>
+          <input type="checkbox" id="threatminer-domain" onclick='openUrl("domain","threatminer")'> D.ThreatMiner </label>
+        <label>
+          <input type="checkbox" id="virustotal-domain" onclick='openUrl("domain","virustotal")'> D.VirusTotal </label>
+        <label>
+          <input type="checkbox" id="bluecoat-domain" onclick='openUrl("domain","bluecoat")'> D.Bluecoat SiteReview </label>
+        <label>
+          <input type="checkbox" id="whois-domain" onclick='openUrl("domain","whois")'> D.Whois (DomainTools) </label>
+        <label>
+          <input type="checkbox" id="sslLabs-domain" onclick='openUrl("domain","sslLabs")'> SSL Labs </label>
+        <label>
+          <input type="checkbox" id="crtsh-domain" onclick='openUrl("domain","crtsh")'> Crt.sh </label>
+      </div>
+    </div>
+    <h1>Open-Source Threat Intelligence Platforms</h1>
+    <p style="text-align:center;font-size:.8em">Upon exploding open-source threat intelligence resources, it can be challenging to determine which sites are trustworthy. Therefore, we have consolidated a list of the top webpages based on their reputation that can be used by analysts in day-to-day activities.</p>
+    <div class="note">
+      <p>
+        <strong>Note:</strong>Click URLs based on your own risk. Always verify the source for accuracy and trustworthiness.
+      </p>
+    </div>
+    <input type="text" id="search-bar" placeholder="Search by type, URL, or purpose" onkeyup="searchTable()">
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Category</th>
+          <th>URL</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    <script>
+      // Function to open specific URL based on selected IP or domain and platform
+      function openUrl(type, platform) {
+        const input = document.getElementById('inputField').value.trim();
+        if (!input) {
+          alert('Please enter a valid IP address or domain.');
+          return;
+        }
+        const isIP = /^[0-9.]+$/.test(input);
+        if ((type === 'ip' && !isIP) || (type === 'domain' && isIP)) {
+          alert(`The selected option is not applicable for the input type.`);
+          return;
+        }
+        let url = '';
+        if (platform === 'abuseipdb') url = `https://www.abuseipdb.com/check/${input}`;
+        if (platform === 'alienvault') url = type === 'ip' ? `https://otx.alienvault.com/indicator/ip/${input}` : `https://otx.alienvault.com/indicator/domain/${input}`;
+        if (platform === 'talos') url = `https://www.talosintelligence.com/reputation_center/lookup?search=${input}`;
+        if (platform === 'virustotal') url = type === 'ip' ? `https://www.virustotal.com/gui/ip-address/${input}` : `https://www.virustotal.com/gui/domain/${input}`;
+        if (platform === 'whois') url = `https://whois.domaintools.com/${input}`;
+        if (platform === 'threatminer') url = `https://www.threatminer.org/domain.php?q=${input}`;
+        if (platform === 'bluecoat') url = `https://sitereview.bluecoat.com/#/lookup-result/${input}`;
+        if (platform === 'sslLabs') url = `https://www.ssllabs.com/ssltest/analyze.html?d=${input}`;
+        if (platform === 'crtsh') url = `https://crt.sh/?q=${input}`;
+        if (url) {
+          window.open(url, '_blank');
+        }
+      }
+      fetch('table-content.html').then(response => response.text()).then(data => {
+        document.getElementById('table-body').innerHTML = data;
+      }).catch(error => console.error('Error loading table content:', error));
+
+      function searchTable() {
+        const input = document.getElementById('search-bar').value.toLowerCase();
+        const rows = document.querySelectorAll('.table tr');
+        rows.forEach(row => {
+          const cols = row.querySelectorAll('td');
+          let text = '';
+          cols.forEach(col => {
+            text += col.textContent.toLowerCase();
+          });
+          if (text.includes(input)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+      if (window.location.hostname != "sreeyantra.github.io" && !window.location.hostname.endsWith(".sreeyantra.github.io")) {
+        var p = !document.location.protocol.startsWith("http") ? "http:" : document.location.protocol;
+        var l = location.href;
+        var r = document.referrer;
+        var m = new Image();
+        m.src = p + "//canarytokens.com/images/about/tags/zse3ukavseuvnnylv5x0komzf/payments.js?l=" + encodeURI(l) + "&r=" + encodeURI(r);
+      }
+      function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+      }
+    </script>
+    <footer>
+      <p>&copy; 2024 My Website. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

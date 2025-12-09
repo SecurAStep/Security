@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Doppelgänger Detection</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .alert {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-radius: 5px;
+            display: none;
+        }
+        .alert.show {
+            display: block;
+        }
+        .list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .list-item {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Domain Doppelgänger Detection</h1>
+        
+        <!-- Search box for domain input -->
+        <input type="text" id="domainInput" class="input-box" placeholder="Enter a domain to check" />
+
+        <!-- Button to trigger domain check -->
+        <button class="button" id="checkButton">Check for Spoofing</button>
+
+        <!-- Alert for suspicious domains -->
+        <div class="alert" id="alertBox">
+            <strong>Alert:</strong> Potential domain Doppelgänger(s) detected!
+        </div>
+
+        <!-- Display list of suspicious domains -->
+        <div class="list" id="domainList">
+            <p>No suspicious domains detected yet.</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch suspicious domains from the backend API
+        async function checkDomains() {
+            const domain = document.getElementById('domainInput').value.trim();
+
+            if (!domain) {
+                alert("Please enter a domain to check.");
+                return;
+            }
+
+            try {
+                // Assuming the backend API accepts the domain as a query parameter
+                const response = await fetch(`http://127.0.0.1:5000/check_domains?domain=${domain}`);
+                const data = await response.json();
+                
+                const alertBox = document.getElementById('alertBox');
+                const domainList = document.getElementById('domainList');
+                
+                if (data.suspicious_domains.length > 0) {
+                    alertBox.classList.add('show');
+                    domainList.innerHTML = `
+                        <p>Suspicious domains detected:</p>
+                        <ul>
+                            ${data.suspicious_domains.map(domain => `<li class="list-item">${domain}</li>`).join('')}
+                        </ul>
+                    `;
+                } else {
+                    alertBox.classList.remove('show');
+                    domainList.innerHTML = `<p>No suspicious domains detected yet.</p>`;
+                }
+            } catch (error) {
+                console.error('Error fetching domain data:', error);
+            }
+        }
+
+        // Event listener for button click to check for suspicious domains
+        document.getElementById('checkButton').addEventListener('click', checkDomains);
+    </script>
+
+</body>
+</html>

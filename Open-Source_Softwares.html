@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is Open Source Software?</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Basic Styles */
+    body {
+      font-family: Calibri, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f4f8;
+      color: #333;
+      line-height: 1.618;
+      scroll-behavior: smooth;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      margin-top: 20px;
+    }
+    
+    h2 {
+      text-align: center;
+      color: #111;
+      margin-top: 30px;
+    }
+
+    /* Container */
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Fade In Animation */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Header Section */
+    header {
+      background-color: #34495e;
+      padding: 20px;
+      color: white;
+      border-radius: 10px;
+    }
+
+    /* Introduction Section */
+    .intro {
+      font-size: 18px;
+      margin-top: 30px;
+      text-align: justify;
+    }
+
+    /* Software List Section */
+    .software-list {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    .software-list li {
+      background-color: #ecf0f1;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.3s, background-color 0.3s ease;
+    }
+
+    .software-list li:hover {
+      transform: scale(1.05);
+      background-color: #3498db;
+      color: white;
+    }
+
+    /* Software Name */
+    .software-name {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    /* Software Icons */
+    .software-icon {
+      font-size: 40px;
+      color: #3498db;
+    }
+
+    /* Software Description */
+    .software-description {
+      margin-top: 5px;
+    }
+
+    .software-link {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .software-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Scroll to Top Button */
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+      font-size: 16px;
+    }
+
+    .scroll-top:hover {
+      background-color: #2980b9;
+    }
+    
+  </style>
+</head>
+<body>
+<strong>Note:</strong>Click URLs based on your own risk. Always verify the source for accuracy and trustworthiness.
+
+  <header>
+    <h1>What is Open Source Software?</h1>
+  </header>
+
+  <div class="container">
+    <section class="intro">
+      <p>
+        Open source software refers to software whose source code is made available to the public for anyone to view, modify, and distribute. The open-source model promotes collaboration and community-driven development. By making the software's code freely accessible, developers around the world can contribute to its improvement, fix bugs, and add new features.
+      </p>
+      <p>
+        Open source software is often free to use, which makes it a popular choice for individuals, startups, and enterprises alike. Many widely-used tools and programs are open source, offering users flexibility, security, and an active community.
+      </p>
+    </section>
+
+    <section>
+      <h2>Some Popular Open Source Software</h2>
+      <ul class="software-list">
+        <li>
+          <div class="software-icon"><i class="fab fa-linux"></i></div>
+          <div>
+            <div class="software-name">Linux</div>
+            <div class="software-description">
+              Linux is an open-source operating system that powers millions of devices worldwide. It’s known for its stability, security, and flexibility. 
+              <a href="https://www.kernel.org/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fab fa-firefox"></i></div>
+          <div>
+            <div class="software-name">Firefox</div>
+            <div class="software-description">
+              Firefox is a free and open-source web browser, known for its speed, privacy features, and customization options.
+              <a href="https://www.mozilla.org/en-US/firefox/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fab fa-vlc"></i></div>
+          <div>
+            <div class="software-name">VLC Media Player</div>
+            <div class="software-description">
+              VLC is an open-source, cross-platform media player that supports a wide variety of audio and video formats.
+              <a href="https://www.videolan.org/vlc/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fab fa-gimp"></i></div>
+          <div>
+            <div class="software-name">GIMP</div>
+            <div class="software-description">
+              GIMP is a powerful, open-source image editor, perfect for creating or editing graphics and photos.
+              <a href="https://www.gimp.org/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-microphone"></i></div>
+          <div>
+            <div class="software-name">Audacity</div>
+            <div class="software-description">
+              Audacity is an open-source audio editing software used for recording, editing, and producing audio.
+              <a href="https://www.audacityteam.org/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-file-pdf"></i></div>
+          <div>
+            <div class="software-name">PDF Gear</div>
+            <div class="software-description">
+              Read, edit, convert, merge, and sign PDF files across devices, for completely free and without signing up.
+              <a href="https://www.pdfgear.com/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-file-alt"></i></div>
+          <div>
+            <div class="software-name">LibreOffice</div>
+            <div class="software-description">
+              LibreOffice is a private, free and open source office suite.
+              <a href="https://www.libreoffice.org/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-share-alt"></i></div>
+          <div>
+            <div class="software-name">ShareX</div>
+            <div class="software-description">
+              Screen capture, file sharing and productivity tool.
+              <a href="https://getsharex.com/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fab fa-thunderbird"></i></div>
+          <div>
+            <div class="software-name">Thunderbird</div>
+            <div class="software-description">
+              Meet Thunderbird, the email and productivity app that maximizes your freedoms.
+              <a href="https://www.thunderbird.net/en-US/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-trash-alt"></i></div>
+          <div>
+            <div class="software-name">RevoUninstaller</div>
+            <div class="software-description">
+              Take control of your Registry with Revo Registry Cleaner!
+              <a href="https://www.revouninstaller.com/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <div class="software-name">Proton VPN</div>
+            <div class="software-description">
+              VPN service with strong privacy protections.
+              <a href="https://protonvpn.com" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-code"></i></div>
+          <div>
+            <div class="software-name">Notepad++</div>
+            <div class="software-description">
+              Source code editor with syntax highlighting and extensive plugin support.
+              <a href="https://notepad-plus-plus.org/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-download"></i></div>
+          <div>
+            <div class="software-name">F-Droid</div>
+            <div class="software-description">
+              Open-source app store for Android with a variety of free apps.
+              <a href="https://f-droid.org/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-chart-line"></i></div>
+          <div>
+            <div class="software-name">Grafana</div>
+            <div class="software-description">
+              Open-source platform for monitoring and observability with customizable dashboards.
+              <a href="https://grafana.com/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-search"></i></div>
+          <div>
+            <div class="software-name">Hunter</div>
+            <div class="software-description">
+              Email verification and outreach tool for finding and connecting with professionals.
+              <a href="https://hunter.io/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="software-icon"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <div class="software-name">Wazuh</div>
+            <div class="software-description">
+              Open-source security monitoring platform for detecting intrusions and vulnerabilities.
+              <a href="https://wazuh.com/" class="software-link" target="_blank">Learn More</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollToTopBtn" class="scroll-top" onclick="scrollToTop()">Back to Top</button>
+
+  <script>
+    // Scroll to Top functionality
+    window.onscroll = function() {
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        scrollToTopBtn.style.display = 'block';
+      } else {
+        scrollToTopBtn.style.display = 'none';
+      }
+    };
+
+    function scrollToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+    
+            function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+  </script>
+    <iframe src="API.html" width="100%" height="500px" title="API's"></iframe> 
+</body>
+</html>

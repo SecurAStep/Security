@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Cybersecurity Threat Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4285F4;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        #map {
+            height: 90vh;
+        }
+
+        .info-box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+            font-size: 16px;
+        }
+
+        .info-box h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .attack-marker {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        .attack-description {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .attack-type {
+            color: yellow;
+            font-weight: bold;
+        }
+
+        /* Quiz Popup Style */
+        .quiz-popup {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            border: 2px solid #4285F4;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .quiz-popup button {
+            background-color: #4285F4;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .quiz-popup button:hover {
+            background-color: #357ae8;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Interactive Cybersecurity Threat Map</h1>
+    <p>Simulating global cybersecurity attacks in real-time for educational purposes.</p>
+</header>
+
+<div class="info-box">
+    <h3>Current Threat Activity</h3>
+    <div id="attackDetails">
+        <p>Simulated attacks are being displayed on the map. Hover over the markers for more details.</p>
+    </div>
+</div>
+
+<div id="map"></div>
+
+<!-- Quiz Popup -->
+<div id="quiz-popup" class="quiz-popup">
+    <h3>Test Your Cybersecurity Knowledge!</h3>
+    <p>Question 1: What should you do if you receive a suspicious email?</p>
+    <ul>
+        <li><input type="radio" name="question1" value="correct"> Verify the sender's email address and not click on any links.</li>
+        <li><input type="radio" name="question1" value="wrong"> Open the email and click on all links.</li>
+    </ul>
+    <button onclick="submitQuiz()">Submit</button>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([20, 0], 2); // Starting position and zoom level for world view
+
+    // Add Tile Layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Fake attack data generation function
+    function generateFakeAttacks() {
+        const fakeAttacks = [];
+        const attackTypes = ['Ransomware', 'Phishing', 'Data Breach', 'DDoS Attack', 'Malware Infection'];
+
+        for (let i = 0; i < 50; i++) {
+            const lat = (Math.random() * 180) - 90; // Random latitude between -90 and 90
+            const lng = (Math.random() * 360) - 180; // Random longitude between -180 and 180
+            const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)];
+            const attackDescription = `${attackType} reported at ${lat.toFixed(2)}, ${lng.toFixed(2)}.`;
+
+            fakeAttacks.push({
+                lat: lat,
+                lng: lng,
+                type: attackType,
+                description: attackDescription
+            });
+        }
+
+        return fakeAttacks;
+    }
+
+    // Create markers for fake attacks
+    const fakeAttacks = generateFakeAttacks();
+
+    fakeAttacks.forEach((attack) => {
+        const marker = L.circleMarker([attack.lat, attack.lng], {
+            radius: 8,
+            color: 'red',
+            fillColor: 'red',
+            fillOpacity: 0.6
+        }).addTo(map);
+
+        // Show attack details when hovering over the marker
+        marker.bindPopup(`
+            <div class="attack-description">
+                <strong>Attack Type:</strong> <span class="attack-type">${attack.type}</span><br>
+                <strong>Location:</strong> Latitude ${attack.lat.toFixed(2)}, Longitude ${attack.lng.toFixed(2)}<br>
+                <p>${attack.description}</p>
+            </div>
+        `);
+    });
+
+    // Simulate attack updates by periodically generating new random attacks
+    setInterval(() => {
+        const newAttacks = generateFakeAttacks();
+        newAttacks.forEach((attack) => {
+            const marker = L.circleMarker([attack.lat, attack.lng], {
+                radius: 8,
+                color: 'red',
+                fillColor: 'red',
+                fillOpacity: 0.6
+            }).addTo(map);
+
+            marker.bindPopup(`
+                <div class="attack-description">
+                    <strong>Attack Type:</strong> <span class="attack-type">${attack.type}</span><br>
+                    <strong>Location:</strong> Latitude ${attack.lat.toFixed(2)}, Longitude ${attack.lng.toFixed(2)}<br>
+                    <p>${attack.description}</p>
+                </div>
+            `);
+        });
+    }, 10000); // Generate new attacks every 10 seconds
+
+    // Update the info box to show activity info
+    function updateInfoBox(message) {
+        document.getElementById('attackDetails').innerHTML = message;
+    }
+
+    updateInfoBox('Tracking simulated attacks globally. Hover over markers for detailed information.');
+
+    // Adding user-reported attack markers
+    function addUserReportedAttack() {
+        const attackType = prompt("Enter attack type (e.g., Phishing, Malware, etc.):");
+        const description = prompt("Enter attack description:");
+
+        const lat = (Math.random() * 180) - 90;
+        const lng = (Math.random() * 360) - 180;
+
+        const newAttack = {
+            lat,
+            lng,
+            type: attackType,
+            description: `${attackType} reported at ${lat.toFixed(2)}, ${lng.toFixed(2)}. ${description}`
+        };
+
+        const marker = L.circleMarker([lat, lng], {
+            radius: 8,
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.6
+        }).addTo(map);
+
+        marker.bindPopup(`
+            <div class="attack-description">
+                <strong>Attack Type:</strong> <span class="attack-type">${newAttack.type}</span><br>
+                <strong>Location:</strong> Latitude ${lat.toFixed(2)}, Longitude ${lng.toFixed(2)}<br>
+                <p>${newAttack.description}</p>
+            </div>
+        `);
+
+        updateInfoBox("New attack reported on the map.");
+    }
+
+    // Show a simple quiz when the user finishes exploring
+    function showQuiz() {
+        document.getElementById("quiz-popup").style.display = "block";
+    }
+
+    // Handle quiz submission
+    function submitQuiz() {
+        const answer = document.querySelector('input[name="question1"]:checked');
+        if (answer && answer.value === 'correct') {
+            alert("Correct! Well done!");
+        } else {
+            alert("Incorrect. Remember: Always verify suspicious emails.");
+        }
+        document.getElementById("quiz-popup").style.display = "none";
+    }
+
+    // Trigger the quiz after 30 seconds of interaction (for example)
+    setTimeout(showQuiz, 30000); // After 30 seconds, show quiz
+</script>
+
+</body>
+</html>

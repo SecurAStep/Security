@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Security Tools and Checklists</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        header a:hover {
+            color: #f4f4f4;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 50px 20px;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        section p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Smooth Scroll Styling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animation for scrolling sections */
+        .section-content {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Button Styling */
+        .section-btn {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .section-btn:hover {
+            background-color: #444;
+        }
+
+        /* QR Code Section */
+        #qr-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Input for URLs */
+        .input-textarea {
+            width: 300px;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#mx-email">MX Email Headers Alignment</a>
+        <a href="#qr-parser">QR Code Parser</a>
+        <a href="#defang">Defang IOC</a>
+        <a href="#mitre">MITRE ATT&CK Framework on APT</a>
+        <a href="#forensics">Forensics Checklist</a>
+        <a href="#investigation">Investigation Checklist</a>
+    </header>
+
+    <!-- MX Email Headers Alignment Section -->
+    <section id="mx-email">
+        <h2>MX Email Headers Alignment</h2>
+        <div class="section-content">
+            <p>Use this tool to align MX email headers for email security analysis. This section allows users to input email headers and get alignment recommendations.</p>
+            <textarea class="input-textarea" placeholder="Enter MX email headers here"></textarea><br><br>
+            <button class="section-btn">Analyze</button>
+        </div>
+    </section>
+
+    <!-- QR Code Parser Section -->
+    <section id="qr-parser">
+        <h2>QR Code Parser</h2>
+        <div class="section-content">
+            <p>Enter a URL or scan a QR code to extract the information inside.</p>
+            <div id="qr-section">
+                <input type="file" id="qr-upload" accept="image/*">
+                <button class="section-btn" onclick="parseQRCode()">Parse QR Code</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Defang IOC Section -->
+    <section id="defang">
+        <h2>Defang IOC</h2>
+        <div class="section-content">
+            <p>This tool allows you to "defang" Indicators of Compromise (IOCs) to prevent accidental clicks on potentially dangerous URLs or IP addresses.</p>
+            <textarea class="input-textarea" placeholder="Enter IOC data (URLs, IPs, domains)"></textarea><br><br>
+            <button class="section-btn">Defang IOCs</button>
+        </div>
+    </section>
+
+    <!-- MITRE ATT&CK Framework on APT Section -->
+    <section id="mitre">
+        <h2>MITRE ATT&CK Framework on APT</h2>
+        <div class="section-content">
+            <p>Explore the MITRE ATT&CK framework and how it relates to Advanced Persistent Threat (APT) activity.</p>
+            <textarea class="input-textarea" placeholder="Enter APT details"></textarea><br><br>
+            <button class="section-btn">Analyze APT</button>
+        </div>
+    </section>
+
+    <!-- Forensics Checklist Section -->
+    <section id="forensics">
+        <h2>Forensics Checklist</h2>
+        <div class="section-content">
+            <p>Ensure that all key steps in a forensic investigation are covered. This checklist will guide you through the necessary actions to take in case of an incident.</p>
+            <button class="section-btn" onclick="alert('Forensics Checklist coming soon!')">View Checklist</button>
+        </div>
+    </section>
+
+    <!-- Investigation Checklist Section -->
+    <section id="investigation">
+        <h2>Investigation Checklist</h2>
+        <div class="section-content">
+            <p>Follow this checklist to ensure that every step of your investigation is thoroughly covered and nothing is overlooked.</p>
+            <button class="section-btn" onclick="alert('Investigation Checklist coming soon!')">View Checklist</button>
+        </div>
+    </section>
+
+    <script>
+        // QR Code Parser function
+        function parseQRCode() {
+            const fileInput = document.getElementById('qr-upload');
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        // Initialize QR code reader (Using a QR code library, such as jsQR)
+                        const qr = jsQR(e.target.result, img.width, img.height);
+                        if (qr) {
+                            alert('QR Code Data: ' + qr.data);
+                        } else {
+                            alert('QR Code not detected.');
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload a QR code image.');
+            }
+        }
+    </script>
+
+    <!-- Include JSQR QR Code Library (for QR code parsing) -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+</body>
+</html>

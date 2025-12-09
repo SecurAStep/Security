@@ -1,0 +1,248 @@
+QR Code Scanner 	  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+    <title>QR Code URL Validator</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #ccd5ae, #2575fc);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        input[type="file"] {
+            padding: 10px;
+            margin: 20px 0;
+            background-color: #fff;
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        input[type="file"]:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            background-color: #34d399;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin: 20px 0;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        button.enabled {
+            opacity: 1;
+            cursor: pointer;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        canvas {
+            display: none;
+        }
+        #result {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #34d399;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: scale(0.5);
+            animation: slideUp 0.5s forwards;
+        }
+        #error {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f87171;
+            color: white;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: slideUp 0.5s forwards;
+        }
+        .spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top: 6px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes slideUp {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>QR Code URL Validator</h1>
+        <p>Upload a QR code image and click "OK" to validate the URL and check its authenticity.</p>
+
+        <!-- File input for QR Code -->
+        <input type="file" id="qrInput" accept="image/*">
+        
+        <!-- OK Button (Initially disabled) -->
+        <button id="okButton" class="disabled">OK</button>
+
+        <!-- Canvas (hidden for QR decoding) -->
+        <canvas id="qrCanvas" width="300" height="300"></canvas>
+
+        <!-- Spinner for loading animation -->
+        <div class="spinner" id="loadingSpinner"></div>
+
+        <!-- Result Area -->
+        <div id="result"></div>
+
+        <!-- Error Area -->
+        <div id="error"></div>
+    </div>
+
+    <script>
+        const trustedDomains = ["example.com", "trusted.com"]; // List of trusted domains
+        const resultArea = document.getElementById("result");
+        const errorArea = document.getElementById("error");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        const okButton = document.getElementById("okButton");
+        let selectedFile = null;
+
+        // Listen for file input change event
+        document.getElementById("qrInput").addEventListener("change", function(event) {
+            selectedFile = event.target.files[0];
+            if (selectedFile) {
+                // Enable OK button after selecting the file
+                okButton.classList.remove('disabled');
+                okButton.classList.add('enabled');
+                okButton.disabled = false; // Enable the button
+            }
+        });
+
+        // Listen for OK button click event
+        okButton.addEventListener("click", function() {
+            if (selectedFile) {
+                showLoading(true);  // Show loading animation
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.getElementById("qrCanvas");
+                        const ctx = canvas.getContext("2d");
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        const qrCode = jsQR(imageData.data, canvas.width, canvas.height);
+
+                        if (qrCode) {
+                            const url = qrCode.data;
+                            displayResult(url);  // Display result
+                        } else {
+                            displayError("No QR code found in the image.");
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(selectedFile);
+            }
+        });
+
+        // Function to extract domain from URL
+        function getDomainFromUrl(url) {
+            try {
+                const urlObj = new URL(url);
+                return urlObj.hostname;
+            } catch (e) {
+                displayError("Invalid URL in the QR code.");
+                return "";
+            }
+        }
+
+        // Function to validate domain
+        function isValidDomain(domain) {
+            return trustedDomains.includes(domain);
+        }
+
+        // Display result with animation
+        function displayResult(url) {
+            const domain = getDomainFromUrl(url);
+            if (isValidDomain(domain)) {
+                resultArea.textContent = `URL Extracted: ${url} (Trusted Domain)`;
+                resultArea.style.backgroundColor = '#34d399';  // Green for trusted
+            } else {
+                displayError(`Suspicious Domain: ${domain}`);
+            }
+        }
+
+        // Display error message with animation
+        function displayError(message) {
+            errorArea.textContent = message;
+            errorArea.style.opacity = '1';  // Show error
+            errorArea.style.transform = 'scale(1)'; // Animate error
+            showLoading(false);  // Hide loading animation
+        }
+
+        // Show or hide the loading spinner
+        function showLoading(isLoading) {
+            if (isLoading) {
+                loadingSpinner.style.display = 'block';
+                resultArea.style.opacity = '0';  // Hide result during loading
+                errorArea.style.opacity = '0';   // Hide error during loading
+            } else {
+                loadingSpinner.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>

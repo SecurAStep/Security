@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open-Source APIs in Cybersecurity</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1 {
+            margin: 20px;
+            text-align: Center;
+            color: #007bff;
+        }
+        
+        h2 {
+            color: #007bff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #000;
+            color: white;
+            text-align: Center;
+        }
+        td {
+            background-color: #fff;
+        }
+        a {
+            color: #007bff;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        body.dark-mode h1, body.dark-mode h2 {
+            color: #80bfff;
+        }
+        body.dark-mode table, body.dark-mode th, body.dark-mode td {
+            border: 1px solid #444;
+        }
+        body.dark-mode th {
+            background-color: #333;
+        }
+        body.dark-mode td {
+            background-color: #222;
+        }
+        body.dark-mode a {
+            color: #1e90ff;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            z-index: 1000; /* Ensure it stays on top */
+        }
+        .dark-mode-toggle:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+
+    <h1>Open-Source APIs for Cybersecurity</h1>
+    <p>Here are various open-source APIs that can be leveraged in cybersecurity to enhance threat detection, prevention, and management:</p>
+    
+    <h2>1. Threat Intelligence and Information Sharing</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Abuse.ch</td>
+                <td>Provides malware hashes, domain names, and IPs associated with cyber threats such as botnets and ransomware.</td>
+                <td><a href="https://www.abuse.ch/" target="_blank">Abuse.ch</a></td>
+            </tr>
+            <tr>
+                <td>VirusTotal</td>
+                <td>API access to scan files, URLs, and IPs with multiple antivirus engines to check if they are associated with known threats.</td>
+                <td><a href="https://www.virustotal.com/" target="_blank">VirusTotal</a></td>
+            </tr>
+            <tr>
+                <td>Cymru</td>
+                <td>Provides threat intelligence feeds such as IP reputation and DNS data.</td>
+                <td><a href="https://www.cymru.com/" target="_blank">Cymru</a></td>
+            </tr>
+            <tr>
+                <td>AlienVault Open Threat Exchange (OTX)</td>
+                <td>Open threat-sharing platform with API access to threat data like IPs, URLs, and file hashes related to cyberattacks.</td>
+                <td><a href="https://otx.alienvault.com/" target="_blank">OTX</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2. Vulnerability Management</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Vulners</td>
+                <td>Provides access to vulnerability information and CVEs along with patch data.</td>
+                <td><a href="https://vulners.com/" target="_blank">Vulners</a></td>
+            </tr>
+            <tr>
+                <td>National Vulnerability Database (NVD)</td>
+                <td>Provides a RESTful API for accessing CVE data and other security information.</td>
+                <td><a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-53.pdf" target="_blank">NVD</a></td>
+            </tr>
+            <tr>
+                <td>OpenVAS</td>
+                <td>Provides APIs for vulnerability scanning and management.</td>
+                <td><a href="https://www.openvas.org/" target="_blank">OpenVAS</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. Intrusion Detection and Prevention</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Suricata</td>
+                <td>Provides an IDS/IPS with real-time threat monitoring and API access for integration with other systems.</td>
+                <td><a href="https://suricata.readthedocs.io/en/suricata-6.0.0/" target="_blank">Suricata</a></td>
+            </tr>
+            <tr>
+                <td>Snort</td>
+                <td>Widely used open-source intrusion detection system with API access for managing real-time network monitoring and logging.</td>
+                <td><a href="https://www.snort.org/" target="_blank">Snort</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>4. Endpoint Protection</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>OSSEC</td>
+                <td>Open-source HIDS for log analysis and real-time monitoring of endpoint activities.</td>
+                <td><a href="https://www.ossec.net/" target="_blank">OSSEC</a></td>
+            </tr>
+            <tr>
+                <td>Wazuh</td>
+                <td>A fork of OSSEC, Wazuh offers a comprehensive API for endpoint detection, log analysis, and vulnerability detection.</td>
+                <td><a href="https://wazuh.com/" target="_blank">Wazuh</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>5. Phishing and Malicious URL Detection</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>PhishTank</td>
+                <td>Provides malicious URL data through an open-source community-driven project.</td>
+                <td><a href="https://www.phishtank.com/developer_info.php" target="_blank">PhishTank</a></td>
+            </tr>
+            <tr>
+                <td>Google Safe Browsing</td>
+                <td>Helps identify unsafe websites and provides real-time URL reputation data to detect phishing and malware-hosting sites.</td>
+                <td><a href="https://developers.google.com/safe-browsing" target="_blank">Safe Browsing API</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>6. Password and Authentication Security</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Have I Been Pwned</td>
+                <td>Check if an email or password has been exposed in a data breach.</td>
+                <td><a href="https://haveibeenpwned.com/API/" target="_blank">Have I Been Pwned</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

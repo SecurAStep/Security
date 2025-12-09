@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Fraud Awareness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Calibri', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0 20px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #edf2f4;
+            color: #000;
+            padding: 10px;
+            gap: 50px;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #3498db;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        nav a:hover {
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .fraud-item {
+            background-color: white;
+            border-radius: 8px;
+            width: 220px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .fraud-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .fraud-icon {
+            font-size: 50px;
+            color: #3498db;
+            margin-bottom: 55px;
+        }
+
+        .fraud-description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            opacity: 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .fraud-item:hover .fraud-description {
+            opacity: 1;
+        }
+
+        .fraud-item h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .fraud-item p {
+            font-size: 14px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+        }
+        /* Golden Ratio Values */
+        :root {
+            --base-size: 40px; /* Starting size */
+            --golden-ratio: 1.618;
+            --button-size: calc(var(--base-size) * var(--golden-ratio)); /* Button diameter */
+            --font-size: calc(var(--base-size) * 0.5); /* Icon size based on the base size */
+            --hover-color: #FFD700; /* Golden color */
+            --active-color: #FFB300; /* Darker golden color */
+        }
+
+        /* Button Styling */
+        .home-button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: var(--font-size); /* Icon size adjusted by golden ratio */
+            width: var(--button-size);  /* Button width adjusted by golden ratio */
+            height: var(--button-size);  /* Button height adjusted by golden ratio */
+            background-color: var(--hover-color); /* Golden background */
+            color: white;
+            border: none;
+            border-radius: 50%; /* Circular button */
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* Hover Effects */
+        .home-button:hover {
+            background-color: var(--active-color); /* Darker golden hover color */
+            transform: scale(1.1); /* Button grows slightly */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+
+        /* Click Effect */
+        .home-button:active {
+            transform: scale(0.98); /* Button shrinks slightly when clicked */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Cyber Fraud Awareness</h1>
+        <p>Learn how to protect yourself from online scams with simple, visual stories.</p>
+         <!-- Home Button with Logo (No Text) -->
+    <button class="home-button" onclick="goHome()">
+        <i class="fas fa-home"></i>
+    </button>  
+    </header>
+  
+    <div class="content" id="fraud-examples">
+        <div class="fraud-item">
+            <i class="fas fa-envelope fraud-icon"></i>
+            <div class="fraud-description">
+                <h3>Phishing Email</h3>
+                <p>This is when scammers trick you into giving away personal information through fake emails.</p>
+            </div>
+        </div>
+
+        
+        <div class="fraud-item">
+            <i class="fas fa-user-shield fraud-icon"></i>
+            <div class="fraud-description">
+                <h3>Identity Theft</h3>
+                <p>Cybercriminals steal your personal data to impersonate you and commit fraud.</p>
+            </div>
+        </div>
+
+        <div class="fraud-item">
+            <i class="fas fa-laptop fraud-icon"></i>
+            <div class="fraud-description">
+                <h3>Fake Websites</h3>
+                <p>Scammers create websites that look real to steal your login information or money.</p>
+            </div>
+        </div>
+
+        <div class="fraud-item">
+            <i class="fas fa-credit-card fraud-icon"></i>
+            <div class="fraud-description">
+                <h3>Online Scams</h3>
+                <p>Scammers try to convince you to send money or give personal details for fake offers.</p>
+            </div>
+        </div>
+
+        <!-- Additional Fraud Topics -->
+        <div class="fraud-item">
+            <i class="fas fa-lock fraud-icon"></i>
+            <div class="fraud-description">
+                <h3>Ransomware</h3>
+                <p>This is when hackers block access to your data and demand payment to restore it.</p>
+            </div>
+        </div>
+
+        <div class="fraud-item">
+            <i class="fas fa-user-secret fraud-icon"></i>
+            <div class="fraud-description">
+                <h3>Social Engineering</h3>
+                <p>Scammers manipulate you into revealing personal information using social tricks.</p>
+            </div>
+        </div>
+
+        <div class="fraud-item">
+            <i class="fas fa-file-alt fraud-icon"></i>
+            <div class="fraud-description">
+                <h3>Fake Documents</h3>
+                <p>Scammers create fake documents to trick you into making a wrong decision.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="Fake_Login_Page.html">Fake Login Page</a>
+        <a href="Phishing_Awareness.html">Phishing Awareness</a>
+    </nav>
+
+    <footer>
+        <p>&copy; 2024 Cyber Fraud Awareness. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // You can add interactive behavior here if necessary
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("Cyber Fraud Awareness website is ready!");
+        });
+        // JavaScript function to redirect to the home page
+			function goHome() {
+				window.location.href = "index.html"; // Replace with your actual home page URL
+			}
+
+    </script>
+</body>
+</html>

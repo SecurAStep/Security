@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MFA Alert Response for Suspicious Device Login">
+    <title>MFA Alert Response: Suspicious Device Login</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            background: linear-gradient(135deg, #f8b8d4, #a6c1ee);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .task-button {
+            background: linear-gradient(135deg, #2980b9, #34495e);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .task-button:hover {
+            background: linear-gradient(135deg, #e74c3c, #34495e);
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar div {
+            background-color: #3498db;
+            height: 100%;
+            width: 0;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            color: #34495e;
+            font-size: 1.8rem;
+        }
+
+        .section-content {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .section-content a {
+            color: #3498db;
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        .task-list p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Incident Response: MFA Alert - Suspicious Device Login</h1>
+    </header>
+
+    <div class="content">
+        <h2 class="section-title">Step 1: What is Multi-Factor Authentication (MFA)?</h2>
+        <p class="section-content">
+            Multi-Factor Authentication (MFA) is an essential security mechanism used to enhance the protection of online accounts. MFA requires two or more forms of verification before granting access. These typically include something you know (a password), something you have (a device like a smartphone), and something you are (biometric verification like fingerprints or facial recognition). 
+        </p>
+        <button class="task-button" onclick="nextStep()">Next: MFA Alert Identification</button>
+
+        <div class="progress-bar">
+            <div id="progress"></div>
+        </div>
+
+        <h2 class="section-title">Step 2: Identifying Suspicious MFA Alerts</h2>
+        <p class="section-content">
+            When MFA alerts are triggered due to suspicious login attempts, it is crucial to immediately investigate the nature of the alert. Suspicious activities that may trigger an MFA alert include:
+        </p>
+        <ul class="task-list">
+            <li><strong>Unusual Device Login:</strong> A login attempt from a device that has not been used previously for MFA.</li>
+            <li><strong>Geolocation Anomalies:</strong> Login attempts from unfamiliar or high-risk geographic locations.</li>
+            <li><strong>Excessive MFA Attempts:</strong> Multiple failed or suspicious MFA challenges from the same IP address or device.</li>
+            <li><strong>Login Outside of Normal Hours:</strong> MFA alerts triggered by login attempts occurring at odd hours, outside of the user’s usual working time.</li>
+            <li><strong>Simultaneous Logins:</strong> Multiple successful logins from different locations or devices within a short time window.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Review MFA Logs</button>
+
+        <h2 class="section-title">Step 3: Review MFA Logs</h2>
+        <p class="section-content">
+            To start analyzing the MFA alert, the first step is to review the relevant logs. These logs will contain key details about the suspicious MFA attempt, including:
+        </p>
+        <ul class="task-list">
+            <li><strong>Timestamp:</strong> The exact time and date of the login attempt.</li>
+            <li><strong>IP Address:</strong> The originating IP address of the login attempt.</li>
+            <li><strong>Device Details:</strong> Device model, OS, and browser used for the login attempt.</li>
+            <li><strong>Location:</strong> The geographic location based on the IP address of the login attempt.</li>
+            <li><strong>MFA Method Used:</strong> Which authentication factor was triggered (e.g., SMS, authenticator app, push notification, biometrics).</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Correlate with Other Logs</button>
+
+        <h2 class="section-title">Step 4: Correlate MFA Logs with Other Security Logs</h2>
+        <p class="section-content">
+            To determine if the suspicious MFA alert is part of a larger attack, it is essential to correlate the MFA logs with other security logs:
+        </p>
+        <ul class="task-list">
+            <li><strong>Firewall Logs:</strong> Check if any suspicious IP addresses have attempted to access the network.</li>
+            <li><strong>VPN Logs:</strong> Review VPN logs to see if the user tried logging in through a VPN service.</li>
+            <li><strong>Authentication Server Logs:</strong> Correlate the MFA logs with authentication server logs to detect any patterns of suspicious activity.</li>
+            <li><strong>Endpoint Detection & Response (EDR) Logs:</strong> Investigate endpoint activity to check if the device used in the login attempt has been compromised or is part of a botnet.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Isolate the Affected Account</button>
+
+        <h2 class="section-title">Step 5: Isolate the Affected Account</h2>
+        <p class="section-content">
+            If the suspicious MFA alert is determined to be a potential security threat, the next step is to isolate the affected account to prevent further unauthorized access. Steps for isolation include:
+        </p>
+        <ul class="task-list">
+            <li><strong>Account Lockdown:</strong> Temporarily lock the account to prevent further login attempts.</li>
+            <li><strong>Password Reset:</strong> Force a password reset for the affected account to ensure that the attacker does not have access.</li>
+            <li><strong>Disable MFA Methods:</strong> Temporarily disable MFA for the affected user and re-enable it after further investigation.</li>
+            <li><strong>Alert User:</strong> Notify the user about the suspicious login attempt and request them to verify their identity.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Investigate the Device</button>
+
+        <h2 class="section-title">Step 6: Investigate the Device</h2>
+        <p class="section-content">
+            A crucial step in handling MFA alerts is to investigate the device used in the suspicious login attempt. This step helps identify if the device is compromised or if the alert is a false positive. Investigate the following:
+        </p>
+        <ul class="task-list">
+            <li><strong>Device Type:</strong> Is the device known to the user? Is it an unusual or unauthorized device?</li>
+            <li><strong>Device History:</strong> Check if the device has previously accessed the user’s account.</li>
+            <li><strong>Device Location:</strong> Cross-check the location of the device with the user’s typical login locations.</li>
+            <li><strong>Device Security:</strong> Check if the device has malware or unusual behavior, such as unapproved apps or system configurations.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Implement Additional Security Measures</button>
+
+        <h2 class="section-title">Step 7: Implement Additional Security Measures</h2>
+        <p class="section-content">
+            If the alert is confirmed as a genuine security threat, implement additional security measures to prevent future incidents:
+        </p>
+        <ul class="task-list">
+            <li><strong>Enforce Stronger MFA Methods:</strong> Require more secure MFA methods, such as hardware tokens or biometrics, for higher-risk accounts.</li>
+            <li><strong>IP Geofencing:</strong> Restrict login attempts from high-risk geographies or regions that are unusual for the user.</li>
+            <li><strong>Account Behavior Analytics:</strong> Enable behavioral analytics to detect anomalous login patterns.</li>
+            <li><strong>Increase User Awareness:</strong> Conduct user training on phishing and social engineering attacks that could target MFA systems.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Conclusion</button>
+
+        <h2 class="section-title">Step 8: Conclusion</h2>
+        <p class="section-content">
+            By following these steps, you can efficiently respond to MFA alert devices and suspicious login attempts. MFA is an essential part of securing accounts, and a timely, thorough response ensures that potential threats are neutralized quickly. Always ensure that users follow strong authentication practices, and continuously monitor accounts for unusual activity.
+        </p>
+        <button class="task-button" onclick="nextStep()">Incident Response Complete</button>
+    </div>
+
+    <script>
+        let progress = 0;
+
+        function nextStep() {
+            progress += 12.5;
+            document.getElementById("progress").style.width = progress + "%";
+            if (progress >= 100) {
+                alert("Incident response steps completed!");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

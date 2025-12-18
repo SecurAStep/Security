@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A comprehensive cheat sheet for responding to network Distributed Denial-of-Service (DDoS) incidents, including preparation, analysis, mitigation, and wrap-up steps.">
+    <title>Network DDoS Incident Response Cheat Sheet</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Calibri', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(to right, #FFB6C1, #98FB98, #E6E6FA); /* Soft pastel: light pink to mint green to lavender */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header, main, footer {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            color: #001F3F;
+        }
+
+        ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .step-card {
+            background: linear-gradient(to bottom, #f0f8ff, #e6f7ff);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 6px solid #001F3F;
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            color: #001F3F;
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            background: linear-gradient(to right, #001F3F, #000000);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: transform 0.3s, background-position 0.3s, box-shadow 0.3s;
+            background-size: 200% auto;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-position: right center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: scale(0.95) translateY(2px);
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #ddd;
+            padding: 1.5rem;
+        }
+
+        footer a {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        /* Responsiveness */
+        @media (min-width: 768px) {
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .steps {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Accessibility */
+        a:focus, .btn:focus {
+            outline: 3px solid #001F3F;
+            outline-offset: 3px;
+        }
+
+        h1, h2, h3 {
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <h1>Network DDoS Incident Response Cheat Sheet</h1>
+        <p>Tips for effectively responding to a Distributed Denial-of-Service (DDoS) incident</p>
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="#general">General</a></li>
+                <li><a href="#preparation">Preparation</a></li>
+                <li><a href="#analysis">Analysis</a></li>
+                <li><a href="#mitigation">Mitigation</a></li>
+                <li><a href="#wrapup">Wrap-Up</a></li>
+                <li><a href="#steps">Key Steps</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+         <section id="steps" aria-labelledby="steps-heading">
+            <h2 id="steps-heading">Key DDoS Incident Response Steps</h2>
+            <div class="steps">
+                <div class="step-card">
+                    <h3>1. Preparation</h3>
+                    <p>Establish contacts, define procedures, and gather tools to save time during an attack.</p>
+                </div>
+                <div class="step-card">
+                    <h3>2. Analysis</h3>
+                    <p>Detect the incident, determine its scope, and involve the appropriate parties.</p>
+                </div>
+                <div class="step-card">
+                    <h3>3. Mitigation</h3>
+                    <p>Mitigate the attack’s effects on the targeted environment.</p>
+                </div>
+                <div class="step-card">
+                    <h3>4. Wrap-Up</h3>
+                    <p>Document details, discuss lessons learned, and adjust plans and defenses.</p>
+                </div>
+            </div>
+            <a href="#" class="btn" role="button">Back to Top</a>
+            <a href="https://example.com/privacy" class="btn" role="button">Privacy Policy</a>
+        </section>
+        
+        <section id="general" aria-labelledby="general-heading">
+            <h2 id="general-heading">General Considerations</h2>
+            <ul>
+                <li>DDoS attacks often flood the network with unwanted traffic or overwhelm specific system resources.</li>
+                <li>Defending effectively usually requires specialized equipment or ISP assistance.</li>
+                <li>Limit the incident response team size to avoid chaos.</li>
+                <li>Attacks can last days—plan for team fatigue and shifts.</li>
+                <li>Understand your equipment’s real DDoS mitigation capabilities.</li>
+            </ul>
+            <a href="#preparation" class="btn" role="button">Go to Preparation</a>
+        </section>
+
+        <section id="preparation" aria-labelledby="prep-heading">
+            <h2 id="prep-heading">Prepare for a Future Incident</h2>
+            <ul>
+                <li>Contact your ISP about available DDoS mitigation options and activation processes.</li>
+                <li>Create a whitelist of critical IPs/protocols to prioritize during an attack.</li>
+                <li>Lower DNS TTLs on key systems for faster failover.</li>
+                <li>Establish contacts: ISP, law enforcement, internal teams.</li>
+                <li>Document infrastructure, topology, and asset inventory.</li>
+                <li>Assess business impact of potential DDoS scenarios.</li>
+                <li>Consider dedicated DDoS mitigation services if risk is high.</li>
+                <li>Harden network, OS, and application configurations.</li>
+                <li>Baseline normal performance for faster attack detection.</li>
+            </ul>
+            <a href="#analysis" class="btn" role="button">Next: Analysis Phase</a>
+        </section>
+
+        <section id="analysis" aria-labelledby="analysis-heading">
+            <h2 id="analysis-heading">Analyze the Attack</h2>
+            <ul>
+                <li>Map the logical flow and identify affected components.</li>
+                <li>Review logs and loads on servers, routers, firewalls, and applications.</li>
+                <li>Identify distinguishing characteristics of malicious traffic.</li>
+                <li>Use network analyzers (tcpdump, NetFlow, etc.).</li>
+                <li>Coordinate with ISP and internal teams for visibility and assistance.</li>
+                <li>Check for extortion demands preceding the attack.</li>
+                <li>Create NIDS signatures if possible.</li>
+                <li>Notify executives/legal; consider law enforcement involvement.</li>
+            </ul>
+            <a href="#mitigation" class="btn" role="button">Next: Mitigation</a>
+        </section>
+
+        <section id="mitigation" aria-labelledby="mitigation-heading">
+            <h2 id="mitigation-heading">Mitigate the Attack’s Effects</h2>
+            <ul>
+                <li>Block/throttle traffic as upstream as possible.</li>
+                <li>Tune TCP/IP settings and terminate unwanted connections.</li>
+                <li>Fail over to alternate sites/networks via DNS.</li>
+                <li>Blackhole traffic to affected IPs.</li>
+                <li>Temporarily disable bottleneck features.</li>
+                <li>Add capacity (servers/bandwidth) if feasible.</li>
+                <li>Route through scrubbing services.</li>
+                <li>Make one defensive change at a time.</li>
+                <li>Implement egress filtering to reduce outbound amplification.</li>
+            </ul>
+            <a href="#wrapup" class="btn" role="button">Next: Wrap-Up</a>
+        </section>
+
+        <section id="wrapup" aria-labelledby="wrapup-heading">
+            <h2 id="wrapup-heading">Wrap-Up the Incident and Adjust</h2>
+            <ul>
+                <li>Review what pre-incident preparation would have helped.</li>
+                <li>Update assumptions and plans based on lessons learned.</li>
+                <li>Evaluate response process and communications.</li>
+                <li>Strengthen internal/external relationships for future incidents.</li>
+            </ul>
+        </section>
+
+       
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2025 DDoS Incident Response Cheat Sheet. All rights reserved.</p>
+        <p><a href="https://example.com/privacy" aria-label="View Privacy Policy">Privacy Policy</a> | This site does not collect personal data.</p>
+        <p><small>Content compiled for educational purposes. Use at your own risk and consult professionals for critical environments.</small></p>
+    </footer>
+</body>
+</html>

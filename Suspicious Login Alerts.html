@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Incident Response: Suspicious IAM Login from Unknown Location">
+    <title>Incident Response: Suspicious IAM Login</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            background: linear-gradient(135deg, #d1e0e0, #b9c2c2);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .task-button {
+            background: linear-gradient(135deg, #34495e, #2d3e50);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .task-button:hover {
+            background: linear-gradient(135deg, #1abc9c, #34495e);
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar div {
+            background-color: #3498db;
+            height: 100%;
+            width: 0;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .section-content {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .section-content a {
+            color: #3498db;
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        .task-list p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Incident Response: Suspicious IAM Login from Unknown Location</h1>
+    </header>
+
+    <div class="content">
+        <h2 class="section-title">Step 1: What is a Suspicious Login Incident?</h2>
+        <p class="section-content">
+            A suspicious login occurs when a user attempts to log in from a location that is unusual or unexpected. This could mean:
+        </p>
+        <ul class="task-list">
+            <li>Login attempts from unfamiliar countries or cities</li>
+            <li>Logins at odd times, such as outside business hours</li>
+            <li>Logins from unknown IP addresses or devices</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Incident Response Life Cycle</button>
+
+        <div class="progress-bar">
+            <div id="progress"></div>
+        </div>
+
+        <h2 class="section-title">Step 2: Incident Response Life Cycle</h2>
+        <p class="section-content">
+            The Incident Response Life Cycle provides a systematic approach to handling security incidents. The stages are:
+        </p>
+        <ul class="task-list">
+            <li><strong>Preparation:</strong> Set up systems and processes to handle incidents.</li>
+            <li><strong>Identification:</strong> Confirm that an incident has occurred.</li>
+            <li><strong>Containment:</strong> Limit the scope of the incident to prevent further damage.</li>
+            <li><strong>Eradication:</strong> Find and remove the root cause of the incident.</li>
+            <li><strong>Recovery:</strong> Restore systems to normal operation.</li>
+            <li><strong>Lessons Learned:</strong> Review and improve response processes for future incidents.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Investigating the Suspicious Login</button>
+
+        <h2 class="section-title">Step 3: Investigating the Suspicious Login</h2>
+        <p class="section-content">
+            When a suspicious login is detected, you must verify whether it was a legitimate attempt or a security threat.
+        </p>
+        <h3 class="section-title">Step 3.1: Review the IAM Alert</h3>
+        <p class="section-content">
+            The IAM system provides key details about the login attempt, including:
+        </p>
+        <ul class="task-list">
+            <li><strong>User Information:</strong> Who was the user involved?</li>
+            <li><strong>Login Location:</strong> From where did the login occur?</li>
+            <li><strong>Time & Date:</strong> Was the login attempt at an unusual time?</li>
+            <li><strong>IP Address:</strong> What is the geographical location of the IP address?</li>
+            <li><strong>Device Information:</strong> Was the device new or known?</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Verify User Activity</button>
+
+        <h3 class="section-title">Step 3.2: Verify User Activity</h3>
+        <p class="section-content">
+            Contact the user to verify if they attempted the login. If the user is unavailable, check their recent activity:
+        </p>
+        <ul class="task-list">
+            <li>Review login history and compare locations.</li>
+            <li>Check for account changes such as password resets or permission modifications.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Investigate the IP Address</button>
+
+        <h3 class="section-title">Step 3.3: Investigate the IP Address</h3>
+        <p class="section-content">
+            Use IP lookup tools to verify the location of the IP address:
+        </p>
+        <ul class="task-list">
+            <li>Check if the IP address is from a known or trusted location.</li>
+            <li>Verify if the IP is on a blacklist or associated with malicious activity.</li>
+            <li>Identify if the IP address is using a VPN or proxy service.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Review User Account Settings</button>
+
+        <h3 class="section-title">Step 3.4: Review User Account Settings</h3>
+        <p class="section-content">
+            Check the user's account for any suspicious activities:
+        </p>
+        <ul class="task-list">
+            <li>Look for changes to permissions or roles.</li>
+            <li>Examine account settings like password changes or security question updates.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Analyze Logs for Additional Indicators</button>
+
+        <h3 class="section-title">Step 3.5: Analyze Logs for Additional Indicators</h3>
+        <p class="section-content">
+            Review authentication, activity, and audit logs to identify suspicious behavior such as:
+        </p>
+        <ul class="task-list">
+            <li>Failed login attempts before the successful login.</li>
+            <li>Any suspicious activity performed right after login.</li>
+            <li>Access to sensitive files or administrative functions.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Contain the Threat</button>
+
+        <h2 class="section-title">Step 4: Contain the Threat</h2>
+        <p class="section-content">
+            Once the suspicious login is confirmed, contain the threat to prevent further damage:
+        </p>
+        <ul class="task-list">
+            <li>Lock the affected user account to prevent further access.</li>
+            <li>Revoke session tokens and require a password reset.</li>
+            <li>Enable Multi-Factor Authentication (MFA) if not already enforced.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Eradicate the Root Cause</button>
+
+        <h2 class="section-title">Step 5: Eradicate the Root Cause</h2>
+        <p class="section-content">
+            Investigate whether the attack was due to a vulnerability or stolen credentials:
+        </p>
+        <ul class="task-list">
+            <li>Check the device for malware or unauthorized software.</li>
+            <li>Patch any vulnerabilities found during the investigation.</li>
+            <li>Ensure all related accounts and systems are secured.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Recover the System</button>
+
+        <h2 class="section-title">Step 6: Recover the System</h2>
+        <p class="section-content">
+            After containment and eradication, restore the system to normal operation:
+        </p>
+        <ul class="task-list">
+            <li>Re-enable user access with a fresh password and MFA enabled.</li>
+            <li>Monitor the system for abnormal activities after recovery.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Post-Incident Analysis</button>
+
+        <h2 class="section-title">Step 7: Post-Incident Analysis</h2>
+        <p class="section-content">
+            Conduct a review of the incident to learn from it:
+        </p>
+        <ul class="task-list">
+            <li>Review how the incident was handled and identify areas for improvement.</li>
+            <li>Update policies and improve security measures to prevent future incidents.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Suggested Preventive Measures</button>
+
+        <h2 class="section-title">Step 8: Suggested Preventive Measures</h2>
+        <p class="section-content">
+            To prevent similar incidents in the future, consider implementing:
+        </p>
+        <ul class="task-list">
+            <li>Enforce Multi-Factor Authentication (MFA).</li>
+            <li>Implement geofencing to block suspicious login locations.</li>
+            <li>Monitor user behavior continuously for anomalies.</li>
+            <li>Provide regular user training on recognizing phishing and other social engineering attacks.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Complete Incident Response</button>
+
+    </div>
+
+    <script>
+        let progress = 0;
+
+        function nextStep() {
+            progress += 10;
+            document.getElementById("progress").style.width = progress + "%";
+            if (progress >= 100) {
+                alert("Incident response steps completed!");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

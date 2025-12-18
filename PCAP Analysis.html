@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Incident Response: Packet Capture for Suspicious Network Traffic">
+    <title>Packet Capture: Suspicious Network Traffic Analysis</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .task-button {
+            background: linear-gradient(135deg, #2980b9, #2c3e50);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .task-button:hover {
+            background: linear-gradient(135deg, #e74c3c, #2c3e50);
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar div {
+            background-color: #3498db;
+            height: 100%;
+            width: 0;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .section-content {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .section-content a {
+            color: #3498db;
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        .task-list p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Incident Response: Packet Capture for Suspicious Network Traffic</h1>
+    </header>
+
+    <div class="content">
+        <h2 class="section-title">Step 1: What is Packet Capture?</h2>
+        <p class="section-content">
+            Packet capture (or packet sniffing) involves capturing data packets that are transmitted across a network. These packets may contain crucial information such as IP addresses, port numbers, protocols, and payload data. In the context of incident response, packet capture can help identify suspicious or malicious network activity.
+        </p>
+        <button class="task-button" onclick="nextStep()">Next: Incident Response Life Cycle</button>
+
+        <div class="progress-bar">
+            <div id="progress"></div>
+        </div>
+
+        <h2 class="section-title">Step 2: Incident Response Life Cycle</h2>
+        <p class="section-content">
+            When responding to suspicious network traffic, the incident response life cycle follows these steps:
+        </p>
+        <ul class="task-list">
+            <li><strong>Preparation:</strong> Prepare systems and personnel for potential network incidents.</li>
+            <li><strong>Identification:</strong> Detect suspicious traffic using packet capture tools and monitoring systems.</li>
+            <li><strong>Containment:</strong> Limit further exposure and isolate the affected systems.</li>
+            <li><strong>Eradication:</strong> Remove any malicious or unwanted network traffic.</li>
+            <li><strong>Recovery:</strong> Restore normal network operations and verify the security of the network.</li>
+            <li><strong>Lessons Learned:</strong> Review and update network monitoring practices and response protocols.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Identifying Suspicious Traffic</button>
+
+        <h2 class="section-title">Step 3: Identifying Suspicious Network Traffic</h2>
+        <p class="section-content">
+            The first step is to detect suspicious network traffic that could indicate a security breach. This can be done using packet capture tools such as Wireshark, tcpdump, or other network monitoring solutions. Indicators of suspicious traffic may include:
+        </p>
+        <ul class="task-list">
+            <li>Unusual outbound connections (e.g., to foreign IPs or unusual ports).</li>
+            <li>Unexplained spikes in network traffic or bandwidth usage.</li>
+            <li>Frequent connection attempts to suspicious external servers.</li>
+            <li>Unusual protocols being used (e.g., a strange combination of ports and services).</li>
+            <li>Traffic containing unusual payloads or obfuscated data.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Capturing Network Packets</button>
+
+        <h2 class="section-title">Step 4: Capturing Network Packets</h2>
+        <p class="section-content">
+            After identifying suspicious traffic, it's time to capture packets for further analysis. Here's how to do it:
+        </p>
+        <ul class="task-list">
+            <li><strong>Wireshark:</strong> Open Wireshark and start capturing packets on the relevant network interface (e.g., Ethernet, Wi-Fi).</li>
+            <li><strong>tcpdump:</strong> Use tcpdump on a Linux system to capture packets using the following command: 
+                <code>sudo tcpdump -i eth0 -w capture.pcap</code>
+            </li>
+            <li><strong>tcpdump filters:</strong> Use filters to capture specific traffic, such as HTTP or DNS:
+                <code>sudo tcpdump -i eth0 port 80</code>
+            </li>
+            <li><strong>Capture duration:</strong> Choose a capture window that allows you to collect enough data, typically a few minutes to an hour, depending on the size of the traffic spike.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Analyzing Captured Packets</button>
+
+        <h2 class="section-title">Step 5: Analyzing Captured Packets</h2>
+        <p class="section-content">
+            Once you have captured the network traffic, it's time to analyze the packets for malicious indicators:
+        </p>
+        <ul class="task-list">
+            <li><strong>Inspect packet headers:</strong> Look for unusual IP addresses, ports, or protocols that don't match normal network traffic.</li>
+            <li><strong>Examine payloads:</strong> Check if there are any suspicious strings or data patterns, such as encrypted or obfuscated content.</li>
+            <li><strong>Follow TCP streams:</strong> Reconstruct full conversations by following the TCP streams to understand the context of the communication.</li>
+            <li><strong>Look for malware communication:</strong> Identify any traffic to known malicious IP addresses, or check for signs of malware command-and-control (C&C) communication.</li>
+            <li><strong>Correlation with other logs:</strong> Cross-reference packet capture data with other logs (firewall, IDS/IPS, etc.) to verify findings and obtain more context.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Containment and Isolation</button>
+
+        <h2 class="section-title">Step 6: Containment and Isolation</h2>
+        <p class="section-content">
+            Once suspicious network traffic has been identified, containment is crucial to stop the attack from spreading. Actions include:
+        </p>
+        <ul class="task-list">
+            <li>Isolate the affected system from the network to prevent further malicious activity.</li>
+            <li>Block the identified suspicious IP addresses or domains using firewall or network controls.</li>
+            <li>Limit outbound communication from the affected systems to prevent data exfiltration.</li>
+            <li>Monitor the network for any signs of lateral movement or further attempts to communicate with the external server.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Eradication of Malicious Traffic</button>
+
+        <h2 class="section-title">Step 7: Eradication of Malicious Traffic</h2>
+        <p class="section-content">
+            To fully eradicate the threat, you need to remove all malicious traffic and prevent its recurrence:
+        </p>
+        <ul class="task-list">
+            <li>Block or remove any malicious software or network tools that may have been deployed on the affected system.</li>
+            <li>Patch any vulnerabilities that allowed the suspicious traffic to occur (e.g., unpatched software or open ports).</li>
+            <li>Remove any configurations or rules that allow malicious traffic to enter or leave the network.</li>
+            <li>Reset passwords and authentication credentials for users who might have been compromised.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Recovery and Restoration</button>
+
+        <h2 class="section-title">Step 8: Recovery and Restoration</h2>
+        <p class="section-content">
+            Once malicious traffic has been eradicated, the next step is to restore normal network operations:
+        </p>
+        <ul class="task-list">
+            <li>Restore affected systems from clean backups or images.</li>
+            <li>Ensure that all security patches and updates have been applied to all systems involved.</li>
+            <li>Test the network and systems to ensure normal operations are restored.</li>
+            <li>Monitor the network closely for any signs of recurring suspicious traffic or new vulnerabilities.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Next: Post-Incident Review</button>
+
+        <h2 class="section-title">Step 9: Post-Incident Review</h2>
+        <p class="section-content">
+            After the incident has been resolved, conduct a post-incident review to learn from the attack and improve future defenses:
+        </p>
+        <ul class="task-list">
+            <li>Review the incident response process and identify any weaknesses or inefficiencies.</li>
+            <li>Enhance network monitoring tools and IDS/IPS rules to detect similar suspicious traffic patterns in the future.</li>
+            <li>Conduct employee training to improve detection of phishing or other attack vectors that may lead to suspicious network traffic.</li>
+            <li>Update firewall and security rules based on lessons learned from the incident.</li>
+        </ul>
+        <button class="task-button" onclick="nextStep()">Incident Response Complete</button>
+
+    </div>
+
+    <script>
+        let progress = 0;
+
+        function nextStep() {
+            progress += 10;
+            document.getElementById("progress").style.width = progress + "%";
+            if (progress >= 100) {
+                alert("Incident response steps completed!");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

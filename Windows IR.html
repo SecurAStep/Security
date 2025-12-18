@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Windows Incident Response Cheat Sheet">
+    <title>Windows Incident Response Cheat Sheet</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            background: linear-gradient(abc4ff, #d1e0e0, #b9c2c2);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #94d2bd;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .task-button {
+            background: linear-gradient(135deg, #34495e, #2d3e50);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .task-button:hover {
+            background: linear-gradient(135deg, #1abc9c, #34495e);
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar div {
+            background-color: #3498db;
+            height: 100%;
+            width: 0;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .section-content {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .section-content a {
+            color: #3498db;
+        }
+
+        .task-list {
+            margin-top: 20px;
+        }
+
+        .task-list p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Windows Incident Response Cheat Sheet</h1>
+    </header>
+
+    <div class="content">
+        <h2 class="section-title">Step 1: What is Incident Response?</h2>
+        <p class="section-content">
+            Incident Response is the process of identifying, managing, and responding to security threats or attacks on a computer system or network. Security incidents could include unauthorized system access, malware infections, or network breaches.
+        </p>
+        <p class="section-content"><strong>Common security events include:</strong></p>
+        <ul class="task-list">
+            <li>Unauthorized use of system privileges</li>
+            <li>System crashes or abnormal behavior</li>
+            <li>Malicious software (malware)</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Check User Accounts</button>
+
+        <div class="progress-bar">
+            <div id="progress"></div>
+        </div>
+
+        <h2 class="section-title">Step 2: Check User Accounts</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Monitoring user accounts helps identify any suspicious logins or account changes.
+        </p>
+        <ul class="task-list">
+            <li><strong>GUI Method:</strong> Press <code>Windows + R</code>, type <code>lusrmgr.msc</code> to see local user accounts.</li>
+            <li><strong>Command Prompt:</strong> Open as Admin and type <code>net user</code> to view user accounts.</li>
+            <li><strong>PowerShell:</strong> Run <code>Get-LocalUser</code> to see account details like enabled status and type.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Monitor Running Processes</button>
+
+        <h2 class="section-title">Step 3: Monitor Running Processes</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Suspicious processes running on the system can indicate malicious activity.
+        </p>
+        <ul class="task-list">
+            <li><strong>Task Manager (GUI):</strong> Press <code>Windows + R</code>, then type <code>taskmgr.exe</code> to view all active processes.</li>
+            <li><strong>Command Prompt:</strong> Run <code>tasklist</code> to see all processes and their details.</li>
+            <li><strong>PowerShell:</strong> Type <code>get-process</code> to see running processes.</li>
+            <li><strong>WMIC (Command Prompt/PowerShell):</strong> Use <code>wmic process list full</code> to find suspicious processes with abnormal behavior.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Check Active Services</button>
+
+        <h2 class="section-title">Step 4: Check Active Services</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Abnormal services could indicate unauthorized software running on the system.
+        </p>
+        <ul class="task-list">
+            <li><strong>GUI Method:</strong> Press <code>Windows + R</code>, type <code>services.msc</code> to see a list of services.</li>
+            <li><strong>Command Prompt:</strong> Run <code>net start</code> to view all active services.</li>
+            <li><strong>PowerShell:</strong> Use <code>Get-Service</code> to list running services.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Review Task Scheduler</button>
+
+        <h2 class="section-title">Step 5: Review Task Scheduler</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Malicious programs might schedule tasks to run at specific times.
+        </p>
+        <ul class="task-list">
+            <li><strong>GUI Method:</strong> Navigate to <code>C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools</code> and open Task Scheduler.</li>
+            <li><strong>Command Prompt:</strong> Run <code>schtasks</code> to list scheduled tasks.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Investigate Startup Programs</button>
+
+        <h2 class="section-title">Step 6: Investigate Startup Programs</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Malicious programs can be set to start automatically when the system boots.
+        </p>
+        <ul class="task-list">
+            <li><strong>Task Manager (GUI):</strong> Open Task Manager and go to the ‘Startup’ tab to see all startup programs.</li>
+            <li><strong>PowerShell:</strong> Run <code>Get-CimInstance Win32_StartupCommand</code> to view all auto-start programs.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Analyze Windows Registry</button>
+
+        <h2 class="section-title">Step 7: Analyze Windows Registry</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Malware can modify the Windows registry to persist on reboot or alter system settings.
+        </p>
+        <ul class="task-list">
+            <li><strong>GUI Method:</strong> Open <code>REGEDIT</code> and navigate to the <code>Run</code> keys in the registry.</li>
+            <li><strong>PowerShell:</strong> Run <code>reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</code> to check the local machine registry for suspicious entries.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Check Active TCP & UDP Ports</button>
+
+        <h2 class="section-title">Step 8: Check Active TCP & UDP Ports</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Open ports can provide attackers with entry points into the system.
+        </p>
+        <ul class="task-list">
+            <li><strong>Command Prompt:</strong> Run <code>netstat -ano</code> to view active network connections.</li>
+            <li><strong>PowerShell:</strong> Use <code>Get-NetTCPConnection</code> to view active connections and their ports.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Monitor File Sharing</button>
+
+        <h2 class="section-title">Step 9: Monitor File Sharing</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Unauthorized file sharing could expose sensitive data or open vulnerabilities.
+        </p>
+        <ul class="task-list">
+            <li><strong>Command Prompt:</strong> Run <code>net view &lt;localhost&gt;</code> to view shared folders.</li>
+            <li><strong>PowerShell:</strong> Use <code>Get-SMBShare</code> to list shared resources.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Inspect System Files</button>
+
+        <h2 class="section-title">Step 10: Inspect System Files</h2>
+        <p class="section-content">
+            <strong>Why it’s important:</strong> Files with unusual extensions or modification dates could indicate malware or unauthorized changes.
+        </p>
+        <ul class="task-list">
+            <li><strong>Command Prompt:</strong> Run <code>forfiles /D -10 /S /M *.exe</code> to find recently modified <code>.exe</code> files.</li>
+            <li><strong>PowerShell:</strong> Check the modification dates of files by running <code>forfiles /D -10 /S /M *.exe</code>.</li>
+        </ul>
+
+        <button class="task-button" onclick="nextStep()">Next: Check Firewall Settings</button>
+    </div>
+
+    <script>
+        let progress = 0;
+
+        function nextStep() {
+            progress += 10;
+            document.getElementById("progress").style.width = progress + "%";
+            alert("Step completed! Moving to next...");
+        }
+    </script>
+
+</body>
+
+</html>

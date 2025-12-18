@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detailed guide for SOC analysts on investigating threats using open-source threat intelligence platforms.">
+    <meta name="author" content="Security Team">
+    <title>Investigating Threat Intelligence Through Open-Source Platforms</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f8b8d4, #a6c1ee);
+            color: #333;
+        }
+
+        header {
+            background-color: #4a6bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+        }
+
+        .section-title {
+            color: #4a6bff;
+            margin-top: 30px;
+            font-size: 1.8em;
+        }
+
+        .section-content {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .platforms-list {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .platforms-list h3 {
+            color: #333;
+        }
+
+        .platforms-list ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .platforms-list ul li {
+            margin-bottom: 10px;
+        }
+
+        .platforms-list a {
+            color: #0073e6;
+            text-decoration: none;
+        }
+
+        .platforms-list a:hover {
+            text-decoration: underline;
+        }
+
+        .step-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #4a6bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .step-button:hover {
+            background: #3758c3;
+        }
+
+        footer {
+            background-color: #4a6bff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Investigating Threat Intelligence Through Open-Source Platforms</h1>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2 class="section-title">Objective</h2>
+            <p class="section-content">
+                Leverage open-source threat intelligence platforms (OSINT) to investigate incidents, identify threats, and respond effectively. 
+                Below are the essential steps for investigating threats using OSINT, which includes detailed actions, information gathering, and how this aids incident response.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="section-title">1. Accessing Trusted Open-Source Threat Intelligence Platforms</h2>
+            <p class="section-content">
+                To start your investigation, you need to identify and access reliable open-source threat intelligence platforms. These platforms provide real-time and historical data about security incidents, malware, and threat actors.
+            </p>
+            <div class="platforms-list">
+                <h3>Open-Source Platforms for Threat Intelligence</h3>
+                <ul>
+                    <li><a href="https://otx.alienvault.com/" target="_blank">AlienVault Open Threat Exchange (OTX)</a></li>
+                    <li><a href="https://www.virustotal.com/" target="_blank">VirusTotal</a></li>
+                    <li><a href="https://misp-project.org/" target="_blank">CIRCL’s MISP (Malware Information Sharing Platform)</a></li>
+                    <li><a href="https://www.recordedfuture.com/" target="_blank">Recorded Future (Free version)</a></li>
+                    <li><a href="https://www.shodan.io/" target="_blank">Shodan</a></li>
+                    <li><a href="https://www.threatcrowd.org/" target="_blank">ThreatCrowd</a></li>
+                    <li><a href="https://www.mcafee.com/enterprise/en-us/products/opendxl.html" target="_blank">OpenDXL (McAfee)</a></li>
+                    <li><a href="https://rules.emergingthreats.net/" target="_blank">Emerging Threats (ET) Open Ruleset</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">2. Investigating and Gathering Key Intelligence Data</h2>
+            <p class="section-content">
+                After accessing the platforms, the next step is to gather critical data that will help with incident analysis. The types of data you should collect include Indicators of Compromise (IOCs), attack techniques, and actor profiles.
+            </p>
+
+            <h3>Key Intelligence Data to Gather</h3>
+            <ul>
+                <li><strong>Indicators of Compromise (IOCs):</strong> IP addresses, domains, file hashes, URLs, and email addresses associated with malicious activity. 
+                    <ul>
+                        <li>Gather IOCs from platforms like <a href="https://otx.alienvault.com/" target="_blank">OTX</a>, <a href="https://www.virustotal.com/" target="_blank">VirusTotal</a>, and <a href="https://www.shodan.io/" target="_blank">Shodan</a>.</li>
+                    </ul>
+                </li>
+                <li><strong>Tactics, Techniques, and Procedures (TTPs):</strong> Understand the attack methods (e.g., spear phishing, ransomware) and map them to MITRE ATT&CK techniques.
+                    <ul>
+                        <li>Review TTPs through platforms like <a href="https://misp-project.org/" target="_blank">CIRCL’s MISP</a> and <a href="https://www.recordedfuture.com/" target="_blank">Recorded Future</a>.</li>
+                    </ul>
+                </li>
+                <li><strong>Threat Actor Profiles:</strong> Identify threat actor groups and their tactics. Look for known campaigns.
+                    <ul>
+                        <li>Check threat actor information on platforms like <a href="https://www.threatcrowd.org/" target="_blank">ThreatCrowd</a> and <a href="https://misp-project.org/" target="_blank">CIRCL’s MISP</a>.</li>
+                    </ul>
+                </li>
+                <li><strong>Malware Families and Behaviors:</strong> Investigate malware families (e.g., Emotet, TrickBot) to understand their behavior and infection methods.
+                    <ul>
+                        <li>Find details about malware families on <a href="https://www.virustotal.com/" target="_blank">VirusTotal</a> and <a href="https://www.recordedfuture.com/" target="_blank">Recorded Future</a>.</li>
+                    </ul>
+                </li>
+                <li><strong>Vulnerabilities and Exploits:</strong> Review active CVEs and exploit details to assess potential threats.
+                    <ul>
+                        <li>Check active vulnerabilities on platforms like <a href="https://www.cve.org/" target="_blank">CVE</a>, <a href="https://www.recordedfuture.com/" target="_blank">Recorded Future</a>, and <a href="https://misp-project.org/" target="_blank">MISP</a>.</li>
+                    </ul>
+                </li>
+                <li><strong>IP Geolocation and ASN Data:</strong> Geolocate suspicious IPs and identify any botnet networks or covert activities.
+                    <ul>
+                        <li>Use <a href="https://www.shodan.io/" target="_blank">Shodan</a> for ASN data and IP geolocation.</li>
+                    </ul>
+                </li>
+                <li><strong>Threat Intelligence Reports:</strong> Stay updated with current reports, alerts, and flags on new threats.
+                    <ul>
+                        <li>Review threat reports on <a href="https://otx.alienvault.com/" target="_blank">OTX</a>, <a href="https://www.recordedfuture.com/" target="_blank">Recorded Future</a>, and <a href="https://misp-project.org/" target="_blank">CIRCL’s MISP</a>.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p class="section-content">
+                This information is crucial in identifying malicious activities, correlating them with your network traffic, and understanding how attacks unfold.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="section-title">3. Mapping Findings to Your Incident Response Workflow</h2>
+            <p class="section-content">
+                After gathering threat intelligence, map your findings to the incident response workflow. This ensures a systematic approach to detection, containment, and mitigation.
+            </p>
+            <h3>Incident Response Steps</h3>
+            <ul>
+                <li><strong>Initial Detection:</strong> Cross-reference IOCs with internal logs (e.g., IDS, firewall logs) to detect suspicious activities.</li>
+                <li><strong>Investigation & Analysis:</strong> Using TTPs, threat actor profiles, and malware data, trace the attack’s path.</li>
+                <li><strong>Containment & Mitigation:</strong> Use IOC data to block malicious IPs, domains, and URLs. Validate patched vulnerabilities.</li>
+                <li><strong>Post-Incident & Reporting:</strong> Share findings with the community and update defenses based on new insights.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="section-title">4. Continual Improvement and Intelligence Sharing</h2>
+            <p class="section-content">
+                To stay ahead of emerging threats, continuously update your internal feeds, collaborate with peers, and share intelligence across platforms.
+            </p>
+        </section>
+
+        <button class="step-button" onclick="alert('Step Completed')">Complete Investigation</button>
+    </div>
+
+    <footer>
+        <p>© 2025 Security Team | All Rights Reserved</p>
+    </footer>
+
+</body>
+
+</html>
